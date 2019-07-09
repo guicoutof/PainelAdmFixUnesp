@@ -1,9 +1,8 @@
 .painel{
-    height: 80vh;
-    width: 100%;
+    flex: 75%;
+    /* height: 80vh; */
     margin-right: 10px;
     display: flex;
     justify-content: flex-end;
     /* temporario ^ */
-    /* background-color: blue */
 }

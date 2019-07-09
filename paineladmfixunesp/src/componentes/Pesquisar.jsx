@@ -9,13 +9,6 @@ export default function pesquisar(props){
 
 
     return <div className="pesquisar">
-                <TextField
-                        id="outlined-search"
-                        label="Pesquisar"
-                        type="search"
-                        className="campo-pesquisar"
-                        margin="normal"
-                        variant="outlined"
-                    />
+                <TextField id="pesquisar" label="Pesquisar" type="search" className="campo-pesquisar" margin="normal" variant="outlined" />
             </div>
 }
