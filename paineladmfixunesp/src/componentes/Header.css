@@ -1,41 +1,28 @@
 #header{
 	background-color:#4682B4;
-	padding: 2vh 2vh;
-	display: grid;
+	display: flex;
+	justify-content: space-between;
 }
 .logo{
-	width:12%;
-	float: left;
-	grid-column-start: 1;
-	grid-column-end: 3;
-	grid-row-start: 1;
-	grid-row-end:4;
+	width:6%;
+	padding: 10px;
+	margin-left: 3vw;
 }
 .titulo{
 	color: white;
-	text-align: center;
-	font-size: 8vh;
-	grid-column-start: 2;
-	grid-column-end: 3;
-	grid-row-start: 1;
-	grid-row-end:4;
+	align-self: center;
+	font-size: 30px;
 }
-.botao{
+.sair{
+	align-self: center;
 	color: white;
-	background-color:#4682B4;
-	border: none;
-	text-align: center;
+	font-size: 30px;
+	margin-right: 3vw;
 	text-decoration: none;
-	display: inline-block;
-	position: relative;
-	font-size:7vh;
-	grid-column-start: 3;
-	grid-column-end: 4;
-	grid-row-start: 1;
-	grid-row-end:4;
+	border: none;
+	background-color: #4682B4;
 }
-.botao:hover{
-	background-color:#ADD8E6;
-	color: #3f3f3f;
-	
+.sair:hover{
+	color:#ADD8E6;
+	cursor: pointer;
 }
