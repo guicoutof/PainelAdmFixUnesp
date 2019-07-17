@@ -1,28 +1,66 @@
-import React from 'react'
+import React from 'react';
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import './Login.css'
 
-export default props =>
-  <div class="box-parent-login">
-    <div class="well bg-white box-login">
-      <h1 class="ls-login-logo">Login</h1>
-      <form role="form">
-        <fieldset>
-          <div class="form-group ls-login-user">
-            <label for="userLogin">Usuário</label>
-            <input class="form-control ls-login-bg-user input-lg" id="userLogin" type="text" aria-label="Usuário" placeholder="Usuário" />
-          </div>
-          <div class="form-group ls-login-password">
-            <label for="userPassword">Senha</label>
-            <input class="form-control ls-login-bg-password input-lg" id="userPassword" type="password" aria-label="Senha" placeholder="Senha" />
-          </div>
+const useStyles = makeStyles(theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+}));
 
-          <a href="#" class="ls-login-forgot">Esqueci minha senha</a>
 
-          <input type="submit" value="Entrar" class="btn btn-primary btn-lg btn-block" />
-          <p class="txt-center ls-login-signup">Não possui um usuário?
-					      <a href="#">Cadastre-se agora</a>
-          </p>
-        </fieldset>
+export default function TextFields() {
+  const classes = useStyles();
+  const [values, setValues] = React.useState({
+    amount: '',
+    password: '',
+    weight: '',
+    weightRange: '',
+    showPassword: false,
+  });
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
+  return (
+    <div className="login">
+      <form className={classes.container} noValidate autoComplete="off">
+        <TextField
+          id="standard-name"
+          label="Name"
+          className={classes.textField}
+          margin="normal"
+        />
+        <FormControl className={clsx(classes.margin, classes.textField)}>
+          <InputLabel htmlFor="adornment-password">Senha</InputLabel>
+          <Input
+            id="adornment-password"
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton aria-label="Toggle password visibility" onClick={handleClickShowPassword}>
+                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
       </form>
     </div>
-  </div>
+  );
+}
