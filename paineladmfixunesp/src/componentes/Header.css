@@ -1,0 +1,28 @@
+#header{
+	background-color:#4682B4;
+	display: flex;
+	justify-content: space-between;
+}
+.logo{
+	width:6%;
+	padding: 10px;
+	margin-left: 4vw;
+}
+.titulo{
+	color: white;
+	align-self: center;
+	font-size: 30px;
+}
+.sair{
+	color: white;
+	background-color:#4682B4;
+	border: none;
+	align-self: center;
+	text-decoration: none;
+	font-size:30px;
+	margin-right: 3vw;
+}
+.sair:hover{
+	color:#ADD8E6;
+	cursor: pointer;
+}
