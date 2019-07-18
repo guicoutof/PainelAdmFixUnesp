@@ -8,13 +8,13 @@ import Footer from './componentes/Footer'
 import Login from './componentes/Login'
 
 export default function App() {
-    // return <div className="app">
-    //     <Header />
-    //     <div className="conteudo">
-    //         <Menu />
-    //         <Painel />
-    //     </div>
-    //     <Footer />
-    // </div>
-    return <Login></Login>
+    return <div className="app">
+        <Header />
+        <div className="conteudo">
+            {/* <Login/> */}
+            <Menu />
+            <Painel />
+        </div>
+        <Footer />
+    </div>
 }

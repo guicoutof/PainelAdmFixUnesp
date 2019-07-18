@@ -2,16 +2,16 @@
 	background-color:#4682B4;
 	display: flex;
 	justify-content: space-between;
+	height: 10%;
 }
 .logo{
-	width:6%;
-	padding: 10px;
-	margin-left: 4vw;
+	width:5%;
+	padding: 3px;
+	margin-left: 5vw;
 }
 .titulo{
 	color: white;
 	align-self: center;
-	font-size: 30px;
 }
 .sair{
 	color: white;
@@ -19,8 +19,9 @@
 	border: none;
 	align-self: center;
 	text-decoration: none;
-	font-size:30px;
+	font-size:200%;
 	margin-right: 3vw;
+	height: 100%;
 }
 .sair:hover{
 	color:#ADD8E6;
