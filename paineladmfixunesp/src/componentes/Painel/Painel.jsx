@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Painel.css'
 
+import Button from '@material-ui/core/Button'
 import Pesquisar from './Pesquisar'
 import Tabela from './Tabela'
 
@@ -32,6 +33,7 @@ export default class painel extends Component{
         return  <div className="painel">
                     <Pesquisar pesquisar={this.pesquisar} />
                     <Tabela lista={this.state.lista}/>
+                    <Button variant="contained" id="btnAgrupar" className="btn btnAgrupar" >Agrupar</Button>
                 </div>
     }
     
