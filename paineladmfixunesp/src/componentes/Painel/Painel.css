@@ -7,3 +7,12 @@
     /* justify-content: flex-end; */
     /* temporario ^ */
 }
+.btn{
+    width: 50%;
+
+}
+.btnAgrupar{
+    margin-left: auto !important;
+    width: 10% !important;
+    margin-top: 10px !important;
+}

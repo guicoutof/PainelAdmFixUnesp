@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
 import Imagem from '@material-ui/icons/Image'
@@ -10,7 +11,7 @@ export default function Tabela (props){
 
     const renderRows = () =>{
       const lista = props.lista || []
-      return lista.map( item =>(
+      return lista.map( item => 
               <tr key={item._id}>
                 <td>{item.email}</td>
                 <td>{item.descricao}</td>
@@ -21,12 +22,11 @@ export default function Tabela (props){
                 <td><Checkbox color="primary" /></td>
                 <td><Checkbox color="secondary" /></td>
               </tr>
-            ))
+            )
     }
 
     
         return(
-          <div>
             <table className="tabela">
               <thead className="cabecalhoTabela">
                 <tr>
@@ -46,7 +46,6 @@ export default function Tabela (props){
                 {renderRows()}
               </tbody>
             </table>
-          </div>
         )
     
   }
