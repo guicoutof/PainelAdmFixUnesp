@@ -1,33 +1,52 @@
-import React, {Component} from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import React from 'react';
+
+import Checkbox from '@material-ui/core/Checkbox';
+import Select from '@material-ui/core/Select';
+import Imagem from '@material-ui/icons/Image'
 
 import './Tabela.css'
 
-export default class Tabela extends Component {
-    render(){
+export default function Tabela (props){ 
+
+    const renderRows = () =>{
+      const lista = props.lista || []
+      return lista.map( item =>(
+              <tr key={item._id}>
+                <td>{item.email}</td>
+                <td>{item.descricao}</td>
+                <td>{item.bloco}</td>
+                <td>{item.piso}</td>
+                <td><Imagem/></td>
+                <td><Select/></td>
+                <td><Checkbox color="primary" /></td>
+                <td><Checkbox color="secondary" /></td>
+              </tr>
+            ))
+    }
+
+    
         return(
           <div>
             <table className="tabela">
               <thead className="cabecalhoTabela">
                 <tr>
-                    <Grid container spacing={2}>
-                    <Grid item xs={2}><div>Email</div></Grid>
-                    <Grid item xs={3}><div>Descrição</div></Grid>
-                    <Grid item xs={1}><div>Bloco</div></Grid>
-                    <Grid item xs={1}><div>Piso</div></Grid>
-                    <Grid item xs={1}><div>Imagem</div></Grid>
-                    <Grid item xs={2}><div>Assunto</div></Grid>
-                    <Grid item xs={1}><div>Resolvido</div></Grid>
-                    <Grid item xs={1}><div>Agrupar</div></Grid>
-                    </Grid>
+                    
+                   <th>Email</th>
+                    <th>Descrição</th>
+                    <th>Bloco</th>
+                    <th>Piso</th>
+                    <th>Imagem</th>
+                    <th>Assunto</th>
+                    <th>Resolvido</th>
+                    <th>Agrupar</th>
+                    
                   </tr>
               </thead>
               <tbody>
-
+                {renderRows()}
               </tbody>
             </table>
           </div>
         )
-    }
-} 
+    
+  }
