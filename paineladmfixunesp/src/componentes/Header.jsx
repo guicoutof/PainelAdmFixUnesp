@@ -7,5 +7,5 @@ export default () =>
 	<div id="header">
 		<img className="logo" src={Logo} alt="Logo"></img>
 		<h1 className="titulo">Painel administrativo Fix.Unesp</h1>
-		<button className="botao">sair</button>
+		<button className="sair">sair</button>
 	</div>
