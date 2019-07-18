@@ -1,8 +1,6 @@
 .menu{
-    /* background-color: #4682B499; */
     flex: 10%;
-    height: 60vh;
-    /* outline: 1px solid #4682B4; */
+    height: 70vh;
     border-right: 1px solid #4682B4;
     display: flex;
     flex-direction: column;

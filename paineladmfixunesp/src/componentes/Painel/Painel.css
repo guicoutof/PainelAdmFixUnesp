@@ -3,6 +3,7 @@
     /* height: 80vh; */
     margin-right: 10px;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    /* justify-content: flex-end; */
     /* temporario ^ */
 }
