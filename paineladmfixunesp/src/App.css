@@ -1,4 +1,9 @@
+.app{
+    height: 100%;
+    width: 100%;
+}
 .conteudo{
     display: flex;
     flex-direction: row;
+    height: 80%;
 }

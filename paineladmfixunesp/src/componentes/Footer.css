@@ -1,9 +1,14 @@
 .footer{
     position:absolute;
     bottom:0;
+    height: 10%;
     width:100%;
     border-top: 1px solid #4682B4;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    
+    display: flex;
+    justify-content: center;
+}
 
+.footer p{
+    align-self: center;
 }
