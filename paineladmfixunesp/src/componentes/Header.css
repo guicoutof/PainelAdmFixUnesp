@@ -2,11 +2,11 @@
 	background-color:#4682B4;
 	display: flex;
 	justify-content: space-between;
-	height: 10%;
+	height: 12%;
 }
 .logo{
-	width:5%;
-	padding: 3px;
+	width:4%;
+	padding: 10px;
 	margin-left: 5vw;
 }
 .titulo{
