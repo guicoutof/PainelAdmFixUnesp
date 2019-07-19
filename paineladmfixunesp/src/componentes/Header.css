@@ -2,11 +2,11 @@
 	background-color:#4682B4;
 	display: flex;
 	justify-content: space-between;
-	height: 10%;
+	height: 12%;
 }
 .logo{
 	width:5%;
-	padding: 3px;
+	padding: 5px;
 	margin-left: 5vw;
 }
 .titulo{
@@ -26,4 +26,8 @@
 .sair:hover{
 	color:#ADD8E6;
 	cursor: pointer;
+}
+
+.sair:focus{
+	outline: 0px;
 }

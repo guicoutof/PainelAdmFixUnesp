@@ -1,18 +1,14 @@
 .painel{
     flex: 75%;
-    /* height: 80vh; */
     margin-right: 10px;
     display: flex;
     flex-direction: column;
-    /* justify-content: flex-end; */
-    /* temporario ^ */
+    padding-bottom: 10px; 
 }
 .btn{
     width: 50%;
-
 }
 .btnAgrupar{
     margin-left: auto !important;
     width: 10% !important;
-    margin-top: 10px !important;
 }
