@@ -3,7 +3,7 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
-import Assunto from './Assunto'
+// import Assunto from './Assunto'
 
 import './Menu.css'
 

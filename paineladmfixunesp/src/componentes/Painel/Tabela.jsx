@@ -12,20 +12,10 @@ import Imagem from '@material-ui/icons/Image'
 
 import './Tabela.css'
 
-function createData(id,email, descricao, bloco, piso) {
-  return {id, email, descricao, bloco, piso };
-}
-
-const rows = [
-  createData(1,'guilherme.couto@unesp.br', 'Buraco no meio da rua','D1','1'),
-  createData(2,'gabriel@unesp.com.br', 'Buraco no meio da rua','D1','1'),
-  createData(3,'vinicius@unesp.br', 'Lampada queimada','D2','1'),
-  createData(4,'leo.yudi@unesp.br', 'Lampada queimada','D4','1'),
-];
-
-export default function Tabela() {
+export default function Tabela(props) {
   
-
+  const rows = props.lista;
+  
   const [values, setValues] = React.useState({
     assunto: []
   });
@@ -38,7 +28,7 @@ export default function Tabela() {
   }
   
   return (
-    <Paper >
+    <Paper className="tabela">
       <Table >
         <TableHead>
           <TableRow>
@@ -64,8 +54,7 @@ export default function Tabela() {
               <TableCell align="center">{row.bloco}</TableCell>
               <TableCell align="center">{row.piso}</TableCell>
               <TableCell align="center"><Imagem/></TableCell>
-              <TableCell align="center"><Select
-                                          value={values.assunto}
+              <TableCell align="center"><Select value={values.assunto}
                                           onChange={handleChange}
                                           inputProps={{
                                             name: 'assunto',

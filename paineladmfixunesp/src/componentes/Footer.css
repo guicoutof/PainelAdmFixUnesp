@@ -12,3 +12,7 @@
 .footer p{
     align-self: center;
 }
+
+.footer a{
+    text-decoration: none;
+}
