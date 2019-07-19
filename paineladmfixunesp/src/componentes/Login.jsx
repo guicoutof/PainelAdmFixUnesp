@@ -1,66 +1,57 @@
 import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import './Login.css'
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-}));
-
-
-export default function TextFields() {
-  const classes = useStyles();
-  const [values, setValues] = React.useState({
-    amount: '',
-    password: '',
-    weight: '',
-    weightRange: '',
-    showPassword: false,
-  });
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-
+export default function Login() {
   return (
-    <div className="login">
-      <form className={classes.container} noValidate autoComplete="off">
-        <TextField
-          id="standard-name"
-          label="Name"
-          className={classes.textField}
-          margin="normal"
-        />
-        <FormControl className={clsx(classes.margin, classes.textField)}>
-          <InputLabel htmlFor="adornment-password">Senha</InputLabel>
-          <Input
-            id="adornment-password"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton aria-label="Toggle password visibility" onClick={handleClickShowPassword}>
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-      </form>
+    <div class="limiter">
+      <div class="container-login100">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
+          <form class="login100-form validate-form">
+            <span class="login100-form-title p-b-33">
+              Login
+					  </span>
+
+            <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+              <input class="input100" type="text" name="email" placeholder="Email" />
+              <span class="focus-input100-1"></span>
+              <span class="focus-input100-2"></span>
+
+            </div>
+
+            <div class="wrap-input100 rs1 validate-input" data-validate="Password is required">
+              <input class="input100" type="password" name="pass" placeholder="Password" />
+              <span class="focus-input100-1"></span>
+              <span class="focus-input100-2"></span>
+            </div>
+
+            <div class="container-login100-form-btn m-t-20">
+              <button class="login100-form-btn">
+                Confirmar
+						      </button>
+            </div>
+
+            <div class="text-center p-t-45 p-b-4">
+              <span class="txt1">
+                Esqueceu
+						      </span>
+
+              <a href="#" class="txt2 hov1">
+                Email / Senha ?
+						      </a>
+            </div>
+
+            <div class="text-center">
+              <span class="txt1">
+                Ainda não tem conta?
+						      </span>
+
+              <a href="#" class="txt2 hov1">
+                Cadastre-se
+					    	</a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
