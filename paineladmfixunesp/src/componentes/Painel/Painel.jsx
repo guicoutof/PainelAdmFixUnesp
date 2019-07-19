@@ -40,11 +40,7 @@ export default class painel extends Component{
     }
 
     pesquisar(pesquisa){
-        // this.state.lista.filter(
-        //     function filtro(obj,pesquisa){
-        //         'email' in obj || 'descricao' in obj || 'bloco' in obj || 'piso' in obj === pesquisa  ? return true : return false
-        //     }
-        // );
+        // this.state.lista.filter((l)=>l.email==pesquisa); quase la
     }
 
 //criar funcao getTable aqui e enviar por paramelho a tabela

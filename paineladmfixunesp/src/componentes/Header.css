@@ -5,8 +5,8 @@
 	height: 12%;
 }
 .logo{
-	width:4%;
-	padding: 10px;
+	width:5%;
+	padding: 5px;
 	margin-left: 5vw;
 }
 .titulo{
@@ -26,4 +26,8 @@
 .sair:hover{
 	color:#ADD8E6;
 	cursor: pointer;
+}
+
+.sair:focus{
+	outline: 0px;
 }
