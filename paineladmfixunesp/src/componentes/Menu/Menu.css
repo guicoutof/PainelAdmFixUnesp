@@ -1,16 +1,16 @@
 .menu{
     flex: 10%;
-    height: 70vh;
     border-right: 1px solid #4682B4;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px;
-    overflow: scroll;
+    overflow: hidden;
  }
 
 .btn{
     width: 50%;
+    margin-top: 10px !important;
     color: white !important;
     background-color: #4682B4 !important;
 }
@@ -26,6 +26,8 @@
 .lista{
     text-align: justify;
     font-family: Arial, Helvetica, sans-serif;
+    overflow-y: scroll;
+    margin-bottom: 10px !important;
 }
 
 .lista li{
@@ -35,47 +37,3 @@
 .lista li:hover{
     box-shadow: 0px 0px 2px #4682B4;
 }
-
-
-/* 
- ul{
-     color: white;
-     float: left;
-
- }
- li {
-     color: white;
-     font-family: Arial;
-     display: inline-block;
-     background-color: #00bfff;
-     width:600%;
-     height: 6%;
-     outline: 1px solid  #0099cc;
-     text-align: center;
-    
- }
- .help{
- position: fixed;
- bottom: 3%;
-  left: 20px;
-   right: 20px;
- outline: 1px solid;
- margin-left:5.5%;
- color: aquamarine;
- background-color: #4682b4;
- border: 0px;
- height: 5%;
- width: 6%;
- 
- }
- .funciona{
-     float: right;
-     height: 5%;
- }
- .agrvai{
-     width: 36.5%;
-     color: aquamarine;
-     background-color: #4682b4;
-     border: 0px;
-     height: 5%;
- } */
