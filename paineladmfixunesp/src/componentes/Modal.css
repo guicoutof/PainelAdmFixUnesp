@@ -1,0 +1,21 @@
+.modal{
+    /* position: 'absolute'; */
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    text-align: center;
+    background-color: white;
+    padding: 2px;
+    /* outline: 'none'; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.btns{
+    margin: 10px;
+    width: 55%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

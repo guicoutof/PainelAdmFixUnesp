@@ -7,33 +7,39 @@
     padding: 10px;
     overflow: hidden;
  }
-
 .btn{
     width: 50%;
     margin-top: 10px !important;
     color: white !important;
     background-color: #4682B4 !important;
 }
-
 .btn:hover{
     background-color: #4682B4aa !important;
 }
-
 .btnHelp{
      margin-top: auto !important;
  }
-
 .lista{
     text-align: justify;
     font-family: Arial, Helvetica, sans-serif;
     overflow-y: scroll;
     margin-bottom: 10px !important;
 }
-
 .lista li{
+    display: flex;
+    align-items: center;
     margin: 5px;
     padding: 5px;
 }
 .lista li:hover{
-    box-shadow: 0px 0px 2px #4682B4;
+    box-shadow: 1px 1px 1px #4682B4;
+}
+.lista li div{
+    margin-right: 10px;
+}
+.crudAssunto{
+    margin: 2px;
+}
+.crudAssunto:hover{
+    box-shadow: 1px 1px 1px #4682B4;
 }
