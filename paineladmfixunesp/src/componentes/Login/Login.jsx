@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import './Login.css'
 
 export default function Login() {
@@ -26,8 +27,8 @@ export default function Login() {
 
             <div class="container-login100-form-btn m-t-20">
               <button class="login100-form-btn">
-                Confirmar
-						      </button>
+              <Link to="/home">Confirmar</Link>
+              </button>
             </div>
 
             <div class="text-center p-t-45 p-b-4">

@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Delete from '@material-ui/icons/DeleteForeverRounded'
 import EditIcon from '@material-ui/icons/Edit'
-import SimpleModal,{ModalSemInput} from '../Modal'
+import SimpleModal,{ModalSemInput} from '../Modal/Modal'
 
 import './Menu.css'
 
