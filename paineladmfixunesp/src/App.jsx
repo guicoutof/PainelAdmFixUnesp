@@ -1,20 +1,14 @@
 import React from 'react';
 import './App.css';
 
-import Painel from './componentes/Painel/Painel'
-import Menu from './componentes/Menu/Menu'
-import Header from './componentes/Header'
-import Footer from './componentes/Footer'
-import Login from './componentes/Login'
+import Header from './componentes/Header/Header'
+import Footer from './componentes/Footer/Footer'
+import Routes from './Routes'
 
 export default function App() {
     return <div className="app">
         <Header />
-        <div className="conteudo">
-            <Login />
-            {/* <Menu />
-            <Painel /> */}
-        </div>
+        <Routes />
         <Footer />
     </div>
 }
