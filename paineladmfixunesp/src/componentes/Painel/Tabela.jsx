@@ -9,6 +9,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Imagem from '@material-ui/icons/Image'
+import DoneIcon from '@material-ui/icons/Done'
+import Fab from '@material-ui/core/Fab';
 
 import './Tabela.css'
 
@@ -39,7 +41,7 @@ export default function Tabela(props) {
             <TableCell align="center"><strong>Imagem</strong></TableCell>
             <TableCell align="center"><strong>Assunto</strong></TableCell>
             <TableCell align="center"><strong>Resolvido</strong></TableCell>
-            <TableCell align="center"><strong>Agrupar</strong></TableCell>
+            <TableCell align="center"><strong>Grupo</strong></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -61,10 +63,12 @@ export default function Tabela(props) {
                                             id: 'assunto-simple',
                                           }}
                                         >
-                                          <MenuItem value={10}>Buraco</MenuItem>
+                                          <MenuItem value={10}>Buraco ooais oad aw odqdwdq odwqi dqodq</MenuItem>
                                           <MenuItem value={20}>Lampada</MenuItem>
                                         </Select></TableCell>
-              <TableCell align="center"><Checkbox color="primary" /></TableCell>
+              <TableCell align="center"><Fab size="small" color="primary" aria-label="done">
+                                          <DoneIcon />
+                                        </Fab></TableCell>
               <TableCell align="center"><Checkbox color="secondary" /></TableCell>
             </TableRow>
           ))}
