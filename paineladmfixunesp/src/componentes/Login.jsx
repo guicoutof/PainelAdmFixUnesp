@@ -5,7 +5,7 @@ export default function Login() {
   return (
     <div class="limiter">
       <div class="container-login100">
-        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-60 p-b-30">
           <form class="login100-form validate-form">
             <span class="login100-form-title p-b-33">
               Login
@@ -19,7 +19,7 @@ export default function Login() {
             </div>
 
             <div class="wrap-input100 rs1 validate-input" data-validate="Password is required">
-              <input class="input100" type="password" name="pass" placeholder="Password" />
+              <input class="input100" type="password" name="pass" placeholder="Senha" />
               <span class="focus-input100-1"></span>
               <span class="focus-input100-2"></span>
             </div>
@@ -32,7 +32,7 @@ export default function Login() {
 
             <div class="text-center p-t-45 p-b-4">
               <span class="txt1">
-                Esqueceu
+                Esqueceu &nbsp;
 						      </span>
 
               <a href="#" class="txt2 hov1">
@@ -42,7 +42,7 @@ export default function Login() {
 
             <div class="text-center">
               <span class="txt1">
-                Ainda não tem conta?
+                Ainda não tem conta? &nbsp;
 						      </span>
 
               <a href="#" class="txt2 hov1">
