@@ -31,15 +31,6 @@
     margin: 5px;
     padding: 5px;
 }
-.lista li:hover{
-    box-shadow: 1px 1px 1px #4682B4;
-}
 .lista li div{
-    margin-right: 10px;
-}
-.crudAssunto{
-    margin: 2px;
-}
-.crudAssunto:hover{
-    box-shadow: 1px 1px 1px #4682B4;
+    margin-right: 5px;
 }

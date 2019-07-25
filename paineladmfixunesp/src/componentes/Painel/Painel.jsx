@@ -10,26 +10,12 @@ export default class painel extends Component{
     constructor(props){
         super(props)
         this.state = { lista: [
-            {id:1,email:'guilherme.couto@unesp.br',descricao:'Buraco no meio da rua',bloco:'D1',piso:'1'},
-            {id:2,email:'gabriel@unesp.com.br',descricao: 'Buraco no meio da rua',bloco:'D1',piso:'1'},
-            {id:3,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1'},
-            {id:4,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:5,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:6,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:7,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:8,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:9,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:10,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:11,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:12,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:13,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:14,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:15,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:16,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:17,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:18,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:19,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
-            // {id:20,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1'},
+            {id:1,email:'guilherme.couto@unesp.br',descricao:'Buraco no meio da rua',bloco:'D1',piso:'1',imagem:'Imagem 1',grupo:0},
+            {id:2,email:'gabriel@unesp.com.br',descricao: 'Buraco no meio da rua',bloco:'D1',piso:'1',imagem:'Imagem 2',grupo:0},
+            {id:3,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',grupo:0},
+            {id:4,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1',imagem:'Imagem 4',grupo:0},
+            // {id:5,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1',imagem:'Imagem 5',grupo:0},
+            
         ], listaExibicao: [] }
 
         this.pesquisar = this.pesquisar.bind(this)

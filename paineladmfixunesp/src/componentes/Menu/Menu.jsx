@@ -2,8 +2,10 @@ import React,{ Component } from 'react'
 
 import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Delete from '@material-ui/icons/DeleteForeverRounded'
-import Edit from '@material-ui/icons/EditTwoTone'
+import EditIcon from '@material-ui/icons/Edit'
 import SimpleModal,{ModalSemInput} from '../Modal'
 
 import './Menu.css'
@@ -123,12 +125,20 @@ export default class Menu extends Component{
                     <div>
                         {assunto.conteudo}
                     </div>
-                    <Edit className="crudAssunto" color="primary" onClick={() => this.handleEdit(assunto)}/>
+                    <IconButton size="small" aria-label="Edit" color="primary"
+                            onClick={() => this.handleEdit(assunto)}>
+                            <EditIcon />
+                    </IconButton>
+                    {/* <EditIcon className="crudAssunto" color="primary" onClick={() => this.handleEdit(assunto)}/> */}
                     <SimpleModal 
                         tittle="Alterar Assunto" tittleLable="Assunto" value={this.state.assunto.conteudo}
                         open={this.state.edit} handleChange={this.handleEditChange}
                         handleConfirm={this.handleEditConfirm} handleClose={this.handleEditClose}/>
-                    <Delete className="crudAssunto" onClick={() => this.handleRemove(assunto)}/>
+                    <IconButton size="small" aria-label="Delete" color="secondary"
+                        onClick={() => this.handleRemove(assunto)}>
+                        <DeleteIcon />
+                    </IconButton>
+                    {/* <Delete className="crudAssunto" onClick={() => this.handleRemove(assunto)}/> */}
                     <ModalSemInput 
                         tittle="Alterar Assunto" subTittle="Deseja realmente remover este assunto ?" value={this.state.assunto.conteudo}
                         open={this.state.delete}
