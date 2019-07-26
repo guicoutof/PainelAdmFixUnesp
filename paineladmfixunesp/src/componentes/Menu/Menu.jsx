@@ -7,7 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Delete from '@material-ui/icons/DeleteForeverRounded'
 import EditIcon from '@material-ui/icons/Edit'
 import SimpleModal,{ModalSemInput} from '../Modal/Modal'
-
+import ModalHelp from '../Modal/ModalHelp'
 import './Menu.css'
 
 export default class Menu extends Component{ 
@@ -24,6 +24,7 @@ export default class Menu extends Component{
             add:false,
             edit:false,
             delete:false,
+			help:false,
         }
 
         this.handleAdd = this.handleAdd.bind(this);
@@ -39,6 +40,8 @@ export default class Menu extends Component{
         this.handleRemove = this.handleRemove.bind(this);
         this.handleRemoveConfirm = this.handleRemoveConfirm.bind(this);
         this.handleRemoveClose = this.handleRemoveClose.bind(this);
+		this.OnModalHelp = this.OnModalHelp.bind(this);
+		this.OffModalHelp = this.OffModalHelp.bind(this);
     }
 
     handleAdd(){
@@ -109,7 +112,12 @@ export default class Menu extends Component{
             };
           });
     }
-
+	OnModalHelp(){
+		this.setState({...this.state,help:true});
+	}
+	OffModalHelp(){
+		this.setState({...this.state,help:false});
+	}
     
     render(){
         return  (
@@ -146,7 +154,13 @@ export default class Menu extends Component{
                 </li>
                 ))}
             </List>
-            <Button variant="contained" id="btnHelp" className="btn btnHelp" >Help</Button>
+            <Button variant="contained" id="btnHelp" className="btn btnHelp" onClick={()=>this.OnModalHelp()}>Help</Button>
+			<ModalHelp 
+                        open={this.state.help}
+				handleClose={this.OffModalHelp}
+                    />
+			
+        
         </div>
         )
     }
