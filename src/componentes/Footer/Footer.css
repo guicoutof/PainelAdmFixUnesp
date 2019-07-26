@@ -1,0 +1,18 @@
+.footer{
+    position:absolute;
+    bottom:0;
+    height: 8%;
+    width:100%;
+    border-top: 1px solid #4682B4;
+    
+    display: flex;
+    justify-content: center;
+}
+
+.footer p{
+    align-self: center;
+}
+
+.footer a{
+    text-decoration: none;
+}

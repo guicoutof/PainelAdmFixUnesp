@@ -1,0 +1,14 @@
+.painel{
+    flex: 75%;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px; 
+}
+.btn{
+    width: 50%;
+}
+.btnAgrupar{
+    margin-left: auto !important;
+    width: 10% !important;
+}

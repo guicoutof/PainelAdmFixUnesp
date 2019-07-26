@@ -1,7 +1,7 @@
 import React from 'react'
 import './Header.css'
 
-import Logo from '../assets/imgs/logo.png'
+import Logo from '../../assets/imgs/logo.png'
 
 export default () =>
 	<div id="header">

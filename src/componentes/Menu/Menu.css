@@ -1,0 +1,37 @@
+.menu{
+    flex: 10%;
+    border-right: 1px solid #4682B4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    overflow: hidden;
+ }
+.btn{
+    width: 50%;
+    margin-top: 10px !important;
+    color: white !important;
+    background-color: #4682B4 !important;
+}
+.btn:hover{
+    background-color: #4682B4aa !important;
+}
+.btnHelp{
+     margin-top: auto !important;
+ }
+.lista{
+    text-align: justify;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-y: scroll;
+    margin-bottom: 10px !important;
+}
+.lista li{
+    display: flex;
+    align-items: center;
+    margin: 5px;
+    padding: 5px;
+}
+.lista li div{
+    margin-right: 5px;
+}
+
