@@ -26,6 +26,19 @@ export default class painel extends Component{
     }
 
     pesquisar(pesquisa){
+        this.setState(state=>{
+            const listaExibicao = state.lista.map((row)=>{
+                if(row.email.indexOf(pesquisa))return row
+                else if(row.descricao.indexOf(pesquisa))return row
+                else if(row.bloco.indexOf(pesquisa))return row
+                else if(row.piso.indexOf(pesquisa))return row
+
+            })
+            console.log(listaExibicao);
+            return {
+                listaExibicao,
+            }
+        })
         // this.state.lista.filter((l)=>l.email==pesquisa); quase la
     }
 

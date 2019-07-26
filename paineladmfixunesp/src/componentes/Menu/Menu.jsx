@@ -4,10 +4,10 @@ import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Delete from '@material-ui/icons/DeleteForeverRounded'
 import EditIcon from '@material-ui/icons/Edit'
 import SimpleModal,{ModalSemInput} from '../Modal/Modal'
 import ModalHelp from '../Modal/ModalHelp'
+
 import './Menu.css'
 
 export default class Menu extends Component{ 
@@ -61,7 +61,8 @@ export default class Menu extends Component{
                     const assuntos = [...state.assuntos, {id:this.state.assuntos.length+1,conteudo:assunto}];
                     console.log(assuntos);
                     return {
-                        assuntos,add:false
+                        assuntos,
+                        add:false
                     }
                   })
             }else alert('Este assunto já existe!!');
@@ -89,9 +90,11 @@ export default class Menu extends Component{
                         }else return assunto
                     });
         
-                    return {assuntos}
+                    return {
+                        assuntos,
+                        edit:false
+                    }
                 })
-                this.setState({...this.state,edit:false});
             }else alert('Este assunto já existe!!');
         }else alert('Assunto vazio!!');
     }
@@ -108,7 +111,8 @@ export default class Menu extends Component{
             const assuntos = state.assuntos.filter(assunto => assunto.id !== this.state.assunto.id);
       
             return {
-              assuntos,delete:false
+              assuntos,
+              delete:false
             };
           });
     }
@@ -137,7 +141,6 @@ export default class Menu extends Component{
                             onClick={() => this.handleEdit(assunto)}>
                             <EditIcon />
                     </IconButton>
-                    {/* <EditIcon className="crudAssunto" color="primary" onClick={() => this.handleEdit(assunto)}/> */}
                     <SimpleModal 
                         tittle="Alterar Assunto" tittleLable="Assunto" value={this.state.assunto.conteudo}
                         open={this.state.edit} handleChange={this.handleEditChange}
@@ -146,7 +149,6 @@ export default class Menu extends Component{
                         onClick={() => this.handleRemove(assunto)}>
                         <DeleteIcon />
                     </IconButton>
-                    {/* <Delete className="crudAssunto" onClick={() => this.handleRemove(assunto)}/> */}
                     <ModalSemInput 
                         tittle="Alterar Assunto" subTittle="Deseja realmente remover este assunto ?" value={this.state.assunto.conteudo}
                         open={this.state.delete}
