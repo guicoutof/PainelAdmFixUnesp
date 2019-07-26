@@ -63,7 +63,7 @@ export default function Tabela(props) {
                                             id: 'assunto-simple',
                                           }}
                                         >
-                                          <MenuItem value={10}>Buraco ooais oad aw odqdwdq odwqi dqodq</MenuItem>
+                                          <MenuItem value={10}>Buraco</MenuItem>
                                           <MenuItem value={20}>Lampada</MenuItem>
                                         </Select></TableCell>
               <TableCell align="center"><Fab size="small" color="primary" aria-label="done">
