@@ -75,3 +75,17 @@ export function ModalHelp(props){
                 </div>
             </Modal>
 }
+
+export function ModalImage(props){
+
+    return <Modal
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            open={props.open}
+            onClose={props.handleClose}
+            >
+            <div className="modalImage">
+                 <p>{props.conteudo}</p>
+            </div>
+            </Modal>
+}
