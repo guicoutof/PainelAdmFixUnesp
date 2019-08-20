@@ -16,11 +16,78 @@ import { ModalImage } from '../Modal/Modal'
 
 import './Tabela.css'
 
-export default class Tabela extends Component{
+
+export default function Tabela(props) {
+
+ return (
+  <Paper className="tabela">
+  <Table >
+    <TableHead>
+      <TableRow>
+        <TableCell align="center"><strong>Email</strong></TableCell>
+        <TableCell align="center"><strong>Descrição</strong></TableCell>
+        <TableCell align="center"><strong>Bloco</strong></TableCell>
+        <TableCell align="center"><strong>Piso</strong></TableCell>
+        <TableCell align="center"><strong>Imagem</strong></TableCell>
+        <TableCell align="center"><strong>Assunto</strong></TableCell>
+        <TableCell align="center"><strong>Resolvido</strong></TableCell>
+        <TableCell align="center"><strong>Grupo</strong></TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+
+    {props.rows.map(row => (
+      <TableRow key={row.id}>
+        <TableCell component="th" scope="row" align="center">
+          {row.email}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center">
+          {row.descricao}
+        </TableCell>
+        <TableCell align="center">
+          {row.bloco}
+        </TableCell>
+        <TableCell align="center">
+          {row.piso}
+        </TableCell>
+        <TableCell align="center">
+          <IconButton size="small" aria-label="Imagem" onClick={()=>props.handleOpen(row.imagem)} >
+            <Imagem />
+          </IconButton>
+            <ModalImage className="imagem" open={props.imageModal} handleClose={props.handleClose} conteudo={props.imagemExibixao}></ModalImage>
+        </TableCell>
+        <TableCell align="center">
+          <Select name='assunto' value={row.assunto} onClick={()=>props.onClickAssunto(row.id)} onChange={props.handleChangeAssunto}>
+            {props.assuntos.map(
+              assunto => (
+                <MenuItem key={assunto.id} value={assunto.conteudo}>{assunto.conteudo}</MenuItem>
+              )
+            )}
+          </Select>
+        </TableCell>
+        <TableCell align="center">
+          <Fab size="small" color="primary" aria-label="done">
+            <DoneIcon />
+          </Fab>
+        </TableCell>
+        <TableCell align="center">
+          <Checkbox color="secondary" defaultChecked={row.checked}/>
+        </TableCell>
+      </TableRow>
+    ))}
+
+    </TableBody>
+        </Table>
+      </Paper>
+    );
+  }
+
+
+export  class Tabelasss extends Component{
   constructor(props){
     super(props)
     this.state ={
-      rows:props.lista,
+      rows:props.listaExibicao,
       linha:{
         id:0,
         email:'',
@@ -30,6 +97,7 @@ export default class Tabela extends Component{
         imagem:'',
         grupo:0,
         assunto:'',
+        checked:false,
       },
       image:false
     }
@@ -52,7 +120,6 @@ export default class Tabela extends Component{
 
   onClickAssunto(row){
     this.setState({...this.state,linha:row})
-    // console.log(this.state.linha)
   };
 
   handleChangeAssunto(event) {
@@ -122,7 +189,7 @@ export default class Tabela extends Component{
                   </Fab>
                 </TableCell>
                 <TableCell align="center">
-                  <Checkbox color="secondary" />
+                  <Checkbox color="secondary" onChange={this.props.handleGrupoCheck(row)} defaultChecked={row.checked}/>
                 </TableCell>
               </TableRow>
             ))}
