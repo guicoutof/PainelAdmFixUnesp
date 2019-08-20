@@ -53,7 +53,7 @@ export default class Componentes extends Component{
             if(!this.state.assuntos.find((a)=>a.conteudo === assunto)){
                 this.setState(state => {
                     const assuntos = [...state.assuntos, {id:this.state.assuntos.length+1,conteudo:assunto}];
-                    console.log(assuntos);
+
                     return {
                         assuntos,
                         add:false
