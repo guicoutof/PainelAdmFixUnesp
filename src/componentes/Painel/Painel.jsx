@@ -10,17 +10,19 @@ export default class painel extends Component{
     constructor(props){
         super(props)
         this.state = { lista: [
-            {id:1,email:'guilherme.couto@unesp.br',descricao:'Buraco no meio da rua',bloco:'D1',piso:'1',imagem:'Imagem 1',grupo:0,assunto:'',checked:false},
-            {id:2,email:'gabriel@unesp.com.br',descricao: 'Buraco no meio da rua',bloco:'D1',piso:'1',imagem:'Imagem 2',grupo:0,assunto:'',checked:false},
-            {id:3,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',grupo:0,assunto:'',checked:false},
-            {id:4,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1',imagem:'Imagem 4',grupo:0,assunto:'',checked:false},
-            // {id:5,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1',imagem:'Imagem 5',grupo:0},
+            {id:1,email:'guilherme.couto@unesp.br',descricao:'Buraco no meio da rua',bloco:'D1',piso:'1',imagem:'Imagem 1',assunto:'',checked:false,grupo:0,visible:true},
+            {id:2,email:'gabriel@unesp.com.br',descricao: 'Buraco no meio da rua',bloco:'D1',piso:'1',imagem:'Imagem 2',assunto:'',checked:false,grupo:0,visible:true},
+            {id:3,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',assunto:'',checked:false,grupo:0,visible:true},
+            {id:4,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',assunto:'',checked:false,grupo:0,visible:true},
+            {id:5,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',assunto:'',checked:false,grupo:0,visible:true},
+            {id:6,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1',imagem:'Imagem 4',assunto:'',checked:false,grupo:0,visible:true},
             
             ],
             listaExibicao: null,
             imageModal:false,
             imagemExibixao:'',
-            idAssunto:0
+            idAssunto:0,
+            grupos:[]
         }
 
         this.pesquisar = this.pesquisar.bind(this)
@@ -31,6 +33,8 @@ export default class painel extends Component{
 
         this.onClickAssunto = this.onClickAssunto.bind(this);
         this.handleChangeAssunto = this.handleChangeAssunto.bind(this);
+
+        this.agrupar = this.agrupar.bind(this);
     }
 
     handleOpenModalImage(imagem){
@@ -52,6 +56,7 @@ export default class painel extends Component{
                 else if(row.descricao.indexOf(pesquisa) !== -1) return row
                 else if(row.piso.indexOf(pesquisa) !== -1) return row
                 else if(row.bloco.indexOf(pesquisa) !== -1) return row
+                return null
             });
             
             this.setState({listaExibicao:listar});
@@ -83,26 +88,77 @@ export default class painel extends Component{
     }
 
     handleGrupoCheck(row){
-        // console.log(row);
-        // this.setState(state=>{
-        //     const lista = state.lista.map((linha)=>{
-        //         if(linha.id === row.id){
-        //             if(linha.checked)linha.checked=false;
-        //             else linha.checked=true;
-        //         }
-        //         return linha
-        //     })
+        this.setState(state=>{
+            const lista = state.lista.map((linha)=>{
+                if(linha.id === row.id){
+                    if(linha.checked)linha.checked=false;
+                    else linha.checked=true;
+                }
+                return linha
+            })
 
-        //     return{lista}
-        // })
+            return{lista}
+        })
     }
+
+    agrupar(){
+        //verificar quem foi checkado e adicionar ao grupo se for compativel
+        if(this.state.lista.filter((linha)=>{if(linha.checked)return linha;return null}).length>=2){
+            let alerta = false;
+            const grupao = this.state.lista.filter((linha)=>{
+                if(linha.checked){
+                    if(this.state.lista.filter((l)=>{
+                        if(l.checked){
+                            if(linha.id !== l.id){
+                                if(l.bloco.indexOf(linha.bloco) !== -1 && l.piso.indexOf(linha.piso) !== -1 && l.assunto.indexOf(linha.assunto) !== -1 &&l.assunto !== '')
+                                    return l
+                                else alerta = true;}}return null
+                        }).length >= 1)
+                        return linha
+                }return null
+            })
+
+            //atualiza a lista da existencia de um novo grupo
+            let primeiro = true;
+            const lista = this.state.lista.map((linha)=>{
+                if(grupao){
+                    if(grupao.map((g)=>{
+                        if(linha.id === g.id && primeiro){
+                            linha.grupo = this.state.grupos.length+1;
+                            linha.checked = false;
+                            primeiro = false;
+                            return linha
+                        }else if(linha.id === g.id){
+                            linha.grupo = this.state.grupos.length+1;
+                            linha.checked = false;
+                            linha.visible = false;
+                            return linha
+                        }else return linha
+                    }))return linha;else return null
+                }else return null
+            })
+
+            if(alerta)alert('Há problemas diferentes ou não classificados !!');
+            else this.setState(state => {
+                const grupos = [...state.grupos, {id:this.state.grupos.length+1,grupo:grupao}];
+                
+                return {
+                    grupos,
+                    lista:lista,
+                    listaExibicao:lista
+                }
+            })
+
+        }
+    }
+
     render(){
         return  <div className="painel">
                     <Pesquisar pesquisar={this.pesquisar} />
                     <Tabela rows={this.state.listaExibicao ? this.state.listaExibicao : this.state.lista} assuntos={this.props.assuntos}
                         imageModal={this.state.imageModal} handleOpen={this.handleOpenModalImage} handleClose={this.handleCloseModalImage} imagemExibixao={this.state.imagemExibixao}
                         onClickAssunto = {this.onClickAssunto} handleGrupoCheck={this.handleGrupoCheck} handleChangeAssunto={this.handleChangeAssunto}/>
-                    <Button variant="contained" id="btnAgrupar" className="btn btnAgrupar" >Agrupar</Button>
+                    <Button variant="contained" id="btnAgrupar" className="btn btnAgrupar" onClick={this.agrupar} >Agrupar</Button>
                 </div>
     }
     
