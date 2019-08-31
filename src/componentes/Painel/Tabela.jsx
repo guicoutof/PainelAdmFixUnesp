@@ -13,7 +13,7 @@ import DoneIcon from '@material-ui/icons/Done'
 import More from '@material-ui/icons/MoreRounded'
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import { ModalImage } from '../Modal/Modal'
+import { ModalImage, ModalGrupo } from '../Modal/Modal'
 
 import './Tabela.css'
 
@@ -21,6 +21,7 @@ import './Tabela.css'
 export default function Tabela(props) {
 
  return (
+  //  cabecalho
   <Paper className="tabela">
   <Table >
     <TableHead>
@@ -37,6 +38,7 @@ export default function Tabela(props) {
     </TableHead>
     <TableBody>
 
+    {/* corpo da tabela */}
     {props.rows.map(row => (
       row.visible?
         <TableRow key={row.id}>
@@ -73,15 +75,18 @@ export default function Tabela(props) {
             </Fab>
           </TableCell>
           <TableCell align="center">
-          {row.grupo ? <IconButton size="small" aria-label="Imagem" color="secondary">
+          {row.grupo ? <IconButton size="small" aria-label="Imagem" color="secondary" onClick={()=>props.openGrupo(row.grupo)}>
                           <More />
                         </IconButton>
-            : <Checkbox color="secondary" defaultChecked={row.checked} onChange={()=>props.handleGrupoCheck(row)}/>
-          }
+                          : <Checkbox color="secondary" defaultChecked={row.checked} onChange={()=>props.handleGrupoCheck(row)}/>
+                        }
+                        <ModalGrupo open={props.grupoModal} handleClose={props.closeGrupo} rows={props.selectedGroup}
+                        handleOpen = {props.handleOpen} imagemModal={props.imageModal} handleCloseImagem={props.handleClose} conteudo={props.imagemExibixao}
+                        />
           </TableCell>
         </TableRow>
       :<TableRow key={row.id}>
-
+        {/* ocultado */}
       </TableRow>
     ))}
 
