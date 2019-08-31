@@ -57,3 +57,16 @@
 	font-family: arial-black;
 	font-size: 20px
 }
+
+.tabelaModal{
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
