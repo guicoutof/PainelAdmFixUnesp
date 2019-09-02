@@ -118,10 +118,6 @@ export function ModalGrupo(props){
                 </TableRow>
                 </TableHead>
                 <TableBody>
-
-
-
-
                 {props.rows.map(row =>(
                     <TableRow key={row.id}>
                     <TableCell component="th" scope="row" align="center">
@@ -140,7 +136,7 @@ export function ModalGrupo(props){
                         <IconButton size="small" aria-label="Imagem" onClick={()=>props.handleOpen(row.imagem)} >
                         <Imagem />
                         </IconButton>
-                        <ModalImage className="imagem" open={props.imageModal} handleClose={props.handleCloseImagem} conteudo={props.imagemExibixao}></ModalImage>
+                        <ModalImage className="imagem" open={props.imageModal} handleClose={props.handleCloseImagem} conteudo={props.conteudo}></ModalImage>
                         </TableCell>
                         </TableRow>
                     ))}

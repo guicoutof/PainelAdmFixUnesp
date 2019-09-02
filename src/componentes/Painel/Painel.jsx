@@ -128,7 +128,7 @@ export default class painel extends Component{
                     //atualiza a lista da existencia de um novo grupo
                     let primeiro = true;
                     const lista = this.state.lista.map((linha)=>{
-                        if(grupao){
+                        if(grupao && !alerta){
                             if(grupao.map((g)=>{
                                 if(linha.id === g.id && primeiro){
                                     linha.grupo = this.state.grupos.length+1;
@@ -168,7 +168,6 @@ export default class painel extends Component{
             })
 
             const group = groupAux[0].grupo //correcao
-            console.log(group)
 
             return{
                 group,
