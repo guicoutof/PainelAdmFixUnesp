@@ -41,6 +41,7 @@ export default function Tabela(props) {
     {/* corpo da tabela */}
     {props.rows.map(row => (
       row.visible?
+        // linha
         <TableRow key={row.id}>
           <TableCell component="th" scope="row" align="center">
             {row.email}
@@ -58,7 +59,7 @@ export default function Tabela(props) {
             <IconButton size="small" aria-label="Imagem" onClick={()=>props.handleOpen(row.imagem)} >
               <Imagem />
             </IconButton>
-              <ModalImage className="imagem" open={props.imageModal} handleClose={props.handleClose} conteudo={props.imagemExibixao}></ModalImage>
+            <ModalImage className="imagem" open={props.imageModal} handleClose={props.handleClose} conteudo={props.imagemExibixao}></ModalImage>
           </TableCell>
           <TableCell align="center">
             <Select name='assunto' value={row.assunto} onClick={()=>props.onClickAssunto(row.id)} onChange={props.handleChangeAssunto}>
@@ -81,8 +82,7 @@ export default function Tabela(props) {
                           : <Checkbox color="secondary" defaultChecked={row.checked} onChange={()=>props.handleGrupoCheck(row)}/>
                         }
                         <ModalGrupo open={props.grupoModal} handleClose={props.closeGrupo} rows={props.selectedGroup}
-                        handleOpen = {props.handleOpen} imagemModal={props.imageModal} handleCloseImagem={props.handleClose} conteudo={props.imagemExibixao}
-                        />
+                        handleOpen = {props.handleOpen} imageModal={props.imageModal} handleCloseImagem={props.handleClose} conteudo={props.imagemExibixao} />
           </TableCell>
         </TableRow>
       :<TableRow key={row.id}>
