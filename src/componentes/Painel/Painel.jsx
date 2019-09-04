@@ -4,6 +4,7 @@ import './Painel.css'
 import Button from '@material-ui/core/Button'
 import Pesquisar from './Pesquisar'
 import Tabela from './Tabela'
+import axios from 'axios'
 
 
 export default class painel extends Component{
@@ -179,7 +180,28 @@ export default class painel extends Component{
     closeGrupo(){
         this.setState({...this.state,groupExibir:0,groupModal:false})
     }
-    
+
+    loadList() {
+        // var xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = function() {
+        //   if (this.readyState === 4 && this.status === 200) {
+        //     // document.getElementById("demo").innerHTML =
+        //     // this.responseText;
+        //     console.log(this.responseText)
+        //   }
+        // };
+        // xhttp.open("GET", "http://deadpyxel.pythonanywhere.com/api/v1/tickets/", true);
+        // xhttp.send();
+
+        // axios.get(`https://cors-anywhere.herokuapp.com//http://deadpyxel.pythonanywhere.com/api/v1/tickets/`)
+        // .then(resp => {  
+        //     console.log(resp.data)
+        // })
+        // .catch(error => {          
+        //     console.log(error)       
+        // })
+      }
+
     render(){
         return  <div className="painel">
                     <Pesquisar pesquisar={this.pesquisar} />
@@ -188,6 +210,7 @@ export default class painel extends Component{
                         onClickAssunto = {this.onClickAssunto} handleGrupoCheck={this.handleGrupoCheck} handleChangeAssunto={this.handleChangeAssunto}
                         openGrupo = {this.openGrupo} grupoModal = {this.state.groupModal} closeGrupo={this.closeGrupo} selectedGroup = {this.state.group}
                         />
+                        {/* {this.loadList()} */}
                     <Button variant="contained" id="btnAgrupar" className="btn btnAgrupar" onClick={this.agrupar} >Agrupar</Button>
                 </div>
     }
