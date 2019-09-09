@@ -4,8 +4,6 @@ import './Painel.css'
 import Button from '@material-ui/core/Button'
 import Pesquisar from './Pesquisar'
 import Tabela from './Tabela'
-// import axios from 'axios'
-
 
 export default class painel extends Component{
     constructor(props){
@@ -26,7 +24,9 @@ export default class painel extends Component{
             grupos:[], //Lista de grupos definidos
             groupModal:false, //Modal de exibição do grupo selecionado para visualizacão
             groupExibir:0,
-            group:[]
+            group:[],
+            api:{},
+            apiLista:[]
         }
 
         this.pesquisar = this.pesquisar.bind(this)
@@ -182,25 +182,62 @@ export default class painel extends Component{
     }
 
     loadList() {
-        // var xhttp = new XMLHttpRequest();
-        // xhttp.onreadystatechange = function() {
-        //   if (this.readyState === 4 && this.status === 200) {
-        //     // document.getElementById("demo").innerHTML =
-        //     // this.responseText;
-        //     console.log(this.responseText)
-        //   }
-        // };
-        // xhttp.open("GET", "http://deadpyxel.pythonanywhere.com/api/v1/tickets/", true);
-        // xhttp.send();
+        var url = 'http://deadpyxel.pythonanywhere.com/api/v1/tickets';
 
-        // axios.get(`https://cors-anywhere.herokuapp.com//http://deadpyxel.pythonanywhere.com/api/v1/tickets/`)
-        // .then(resp => {  
-        //     console.log(resp.data)
-        // })
-        // .catch(error => {          
-        //     console.log(error)       
-        // })
-      }
+        this.doCORSRequest({
+          method: this.id === 'post' ? 'POST' : 'GET',
+          url: url,
+          data: ''
+        });
+
+        while(this.state.api.next){
+            url = this.state.api.next;
+
+            this.doCORSRequest({
+            method: 'GET',
+            url: url,
+            data: ''
+            });
+        }
+  
+      } 
+    doCORSRequest(options) {
+        //requisicao CORS
+        var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
+        var x = new XMLHttpRequest();
+        x.open(options.method, cors_api_url + options.url);
+        x.onload = function (e) {
+        if (x.readyState === 4) {
+            if (x.status === 200) {
+            var json_obj = JSON.parse(x.responseText);
+            // this.setState({ api:json_obj,apiLista:json_obj.results });
+            this.setState(state => {
+                const apiLista = [...state.apiLista, json_obj.results];
+
+                return{
+                    apiLista,
+                    api:json_obj
+                }
+            })
+            } else {
+            console.error(x.statusText);
+            }
+        }
+        }.bind(this);
+        x.onerror = function (e) {
+        console.error(x.statusText);
+        };
+        if (/^POST/i.test(options.method)) {
+        x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        }
+        x.send(options.data);
+}
+    componentWillMount(){
+        this.loadList()
+    }
+    componentDidMount(){
+        
+    }
 
     render(){
         return  <div className="painel">
@@ -210,7 +247,7 @@ export default class painel extends Component{
                         onClickAssunto = {this.onClickAssunto} handleGrupoCheck={this.handleGrupoCheck} handleChangeAssunto={this.handleChangeAssunto}
                         openGrupo = {this.openGrupo} grupoModal = {this.state.groupModal} closeGrupo={this.closeGrupo} selectedGroup = {this.state.group}
                         />
-                        {/* {this.loadList()} */}
+                        {this.state.api ? console.log(this.state.apiLista) : console.log("Loading... ")}
                     <Button variant="contained" id="btnAgrupar" className="btn btnAgrupar" onClick={this.agrupar} >Agrupar</Button>
                 </div>
     }
