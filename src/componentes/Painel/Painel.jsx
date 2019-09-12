@@ -4,6 +4,7 @@ import './Painel.css'
 import Button from '@material-ui/core/Button'
 import Pesquisar from './Pesquisar'
 import Tabela from './Tabela'
+import axios from 'axios'
 
 export default class painel extends Component{
     constructor(props){
