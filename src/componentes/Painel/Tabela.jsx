@@ -33,36 +33,34 @@ export default function Tabela(props) {
         <TableCell align="center"><strong>Imagem</strong></TableCell>
         <TableCell align="center"><strong>Classificação</strong></TableCell>
         <TableCell align="center"><strong>Resolvido</strong></TableCell>
-        <TableCell align="center"><strong>Grupo</strong></TableCell>
+        {/* <TableCell align="center"><strong>Grupo</strong></TableCell> */}
       </TableRow>
     </TableHead>
     <TableBody>
 
     {/* corpo da tabela */}
     {props.rows.map(row => (
-      row.visible?
-        // linha
-        <TableRow key={row.id}>
+        <TableRow key={row.pk}>
           <TableCell component="th" scope="row" align="center">
-            {row.email}
+            {row.email.length>1 ? row.email[0] : row.email}
           </TableCell>
           <TableCell component="th" scope="row" align="center">
-            {row.descricao}
+            {row.ticket_description}
           </TableCell>
           <TableCell align="center">
-            {row.bloco}
+            {row.building}
           </TableCell>
           <TableCell align="center">
-            {row.piso}
+            {row.floor}
           </TableCell>
           <TableCell align="center">
-            <IconButton size="small" aria-label="Imagem" onClick={()=>props.handleOpen(row.imagem)} >
+            <IconButton size="small" aria-label="Imagem" onClick={()=>props.handleOpen(row.picture)} >
               <Imagem />
             </IconButton>
             <ModalImage className="imagem" open={props.imageModal} handleClose={props.handleClose} conteudo={props.imagemExibixao}></ModalImage>
           </TableCell>
           <TableCell align="center">
-            <Select name='assunto' value={row.assunto} onClick={()=>props.onClickAssunto(row.id)} onChange={props.handleChangeAssunto}>
+            <Select name='assunto' value={row.category} onClick={()=>props.onClickAssunto(row.pk)} onChange={props.handleChangeAssunto}>
               {props.assuntos.map(
                 assunto => (
                   <MenuItem key={assunto.id} value={assunto.conteudo}>{assunto.conteudo}</MenuItem>
@@ -75,7 +73,7 @@ export default function Tabela(props) {
               <DoneIcon />
             </Fab>
           </TableCell>
-          <TableCell align="center">
+          {/* <TableCell align="center">
           {row.grupo ? <IconButton size="small" aria-label="Imagem" color="secondary" onClick={()=>props.openGrupo(row.grupo)}>
                           <More />
                         </IconButton>
@@ -83,11 +81,9 @@ export default function Tabela(props) {
                         }
                         <ModalGrupo open={props.grupoModal} handleClose={props.closeGrupo} rows={props.selectedGroup}
                         handleOpen = {props.handleOpen} imageModal={props.imageModal} handleCloseImagem={props.handleClose} conteudo={props.imagemExibixao} />
-          </TableCell>
+          </TableCell> */}
         </TableRow>
-      :<TableRow key={row.id}>
-        {/* ocultado */}
-      </TableRow>
+
     ))}
 
     </TableBody>

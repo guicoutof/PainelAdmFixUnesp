@@ -9,12 +9,12 @@ export default class painel extends Component{
     constructor(props){
         super(props)
         this.state = { lista: [
-            {id:1,email:'guilherme.couto@unesp.br',descricao:'Buraco no meio da rua',bloco:'D1',piso:'1',imagem:'Imagem 1',assunto:'',checked:false,grupo:0,visible:true},
-            {id:2,email:'gabriel@unesp.com.br',descricao: 'Buraco no meio da rua',bloco:'D1',piso:'1',imagem:'Imagem 2',assunto:'',checked:false,grupo:0,visible:true},
-            {id:3,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',assunto:'',checked:false,grupo:0,visible:true},
-            {id:4,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',assunto:'',checked:false,grupo:0,visible:true},
-            {id:5,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',assunto:'',checked:false,grupo:0,visible:true},
-            {id:6,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1',imagem:'Imagem 4',assunto:'',checked:false,grupo:0,visible:true},
+            // {id:1,email:'guilherme.couto@unesp.br',descricao:'Buraco no meio da rua',bloco:'D1',piso:'1',imagem:'Imagem 1',assunto:'',checked:false,grupo:0,visible:true},
+            // {id:2,email:'gabriel@unesp.com.br',descricao: 'Buraco no meio da rua',bloco:'D1',piso:'1',imagem:'Imagem 2',assunto:'',checked:false,grupo:0,visible:true},
+            // {id:3,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',assunto:'',checked:false,grupo:0,visible:true},
+            // {id:4,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',assunto:'',checked:false,grupo:0,visible:true},
+            // {id:5,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',assunto:'',checked:false,grupo:0,visible:true},
+            // {id:6,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1',imagem:'Imagem 4',assunto:'',checked:false,grupo:0,visible:true},
             
             ],
             listaExibicao: null,//lista enviada para a tabela exibir
@@ -26,8 +26,11 @@ export default class painel extends Component{
             groupExibir:0,
             group:[],
             api:{},
-            apiLista:[]
+            apiLista:'',
+            loading:true
         }
+        this.loadTickets()
+
 
         this.pesquisar = this.pesquisar.bind(this)
         this.handleGrupoCheck = this.handleGrupoCheck.bind(this);
@@ -53,17 +56,22 @@ export default class painel extends Component{
     handleCloseModalImage(){
         this.setState({...this.state,imageModal:false});
     }
+
     pesquisar(event){
         const pesquisa = event.target.value;
         if(!pesquisa){
             this.setState({listaExibicao:this.state.lista})
         }else{
             const listar = this.state.lista.filter((row)=>{
-                
-                if(row.email.indexOf(pesquisa) !== -1) return row
-                else if(row.descricao.indexOf(pesquisa) !== -1) return row
-                else if(row.piso.indexOf(pesquisa) !== -1) return row
-                else if(row.bloco.indexOf(pesquisa) !== -1) return row
+                console.log(row)
+                if(row.email[0].indexOf(pesquisa) !== -1) return row
+                else if(row.ticket_description.indexOf(pesquisa) !== -1) return row
+                // else if(row.floor.indexOf(pesquisa) !== -1 ) return row
+                // else if(row.building.indexOf(pesquisa) !== -1) return row
+                // else if(row.room.indexOf(pesquisa) !== -1) return row
+                else if(row.floor == pesquisa ) return row
+                else if(row.building == pesquisa ) return row
+                else if(row.room == pesquisa) return row
                 return null
             });
             
@@ -181,7 +189,7 @@ export default class painel extends Component{
         this.setState({...this.state,groupExibir:0,groupModal:false})
     }
 
-    loadList() {
+    loadTickets() {
         var url = 'http://deadpyxel.pythonanywhere.com/api/v1/tickets';
 
         this.doCORSRequest({
@@ -189,18 +197,10 @@ export default class painel extends Component{
           url: url,
           data: ''
         });
-
-        while(this.state.api.next){
-            url = this.state.api.next;
-
-            this.doCORSRequest({
-            method: 'GET',
-            url: url,
-            data: ''
-            });
-        }
+        
   
-      } 
+    } 
+    
     doCORSRequest(options) {
         //requisicao CORS
         var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
@@ -210,19 +210,29 @@ export default class painel extends Component{
         if (x.readyState === 4) {
             if (x.status === 200) {
             var json_obj = JSON.parse(x.responseText);
-            // this.setState({ api:json_obj,apiLista:json_obj.results });
+            // pegar os tickets de todas as paginas na api
             this.setState(state => {
-                const apiLista = [...state.apiLista, json_obj.results];
+                var tickets = []
+                const apiLista = tickets.concat(...state.apiLista,json_obj.results)
+                if(json_obj.next)
+                    this.doCORSRequest({
+                        method: this.id === 'post' ? 'POST' : 'GET',
+                        url: json_obj.next,
+                        data: ''
+                    });
 
                 return{
                     apiLista,
-                    api:json_obj
+                    api:json_obj,
+                    loading:false
                 }
             })
+
             } else {
             console.error(x.statusText);
             }
         }
+        this.checkTickets()
         }.bind(this);
         x.onerror = function (e) {
         console.error(x.statusText);
@@ -231,13 +241,36 @@ export default class painel extends Component{
         x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         }
         x.send(options.data);
-}
-    componentWillMount(){
-        this.loadList()
     }
-    componentDidMount(){
-        
+
+    checkTickets(){
+        if(!this.state.loading){
+            this.setState(state => {
+                var drop = []   //vetor auxiliar para concatenar tickets que ja foi adicionados (simplificar tickets)
+                const lista = state.apiLista.filter(row=>{
+                    var array = [] // vetor auxiliar para concatenar emails
+                    var dropAux = []   //vetor auxiliar para concatenar tickets que ja foi adicionados (simplificar tickets)
+                    if(drop.indexOf(row) === -1){
+                        for(var i=row.pk;i<state.apiLista.length;i++){
+                            var r = state.apiLista[i];
+                            if(row.category === r.category && row.floor === r.floor && row.room === r.room && row.building === r.building && row.pk !== r.pk ){
+                                row.email = array.concat(row.email,r.email);
+                                drop = dropAux.concat(drop,r);
+                            }
+                        }
+                        return row;
+                    }
+                    else return null
+                })
+
+                return{
+                    lista
+                }
+
+            })
+        }
     }
+
 
     render(){
         return  <div className="painel">
@@ -247,8 +280,8 @@ export default class painel extends Component{
                         onClickAssunto = {this.onClickAssunto} handleGrupoCheck={this.handleGrupoCheck} handleChangeAssunto={this.handleChangeAssunto}
                         openGrupo = {this.openGrupo} grupoModal = {this.state.groupModal} closeGrupo={this.closeGrupo} selectedGroup = {this.state.group}
                         />
-                        {this.state.api ? console.log(this.state.apiLista) : console.log("Loading... ")}
-                    <Button variant="contained" id="btnAgrupar" className="btn btnAgrupar" onClick={this.agrupar} >Agrupar</Button>
+                        {/* {console.log(this.state.lista)} */}
+                    <Button variant="contained" id="btnAgrupar" className="btn btnAgrupar"  >Salvar</Button>
                 </div>
     }
     
