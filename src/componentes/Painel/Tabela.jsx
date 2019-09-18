@@ -1,5 +1,5 @@
 import React from 'react';
-import Checkbox from '@material-ui/core/Checkbox';
+// import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
@@ -10,10 +10,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Imagem from '@material-ui/icons/Image'
 import DoneIcon from '@material-ui/icons/Done'
-import More from '@material-ui/icons/MoreRounded'
+// import More from '@material-ui/icons/MoreRounded'
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import { ModalImage, ModalGrupo } from '../Modal/Modal'
+import { ModalImage } from '../Modal/Modal'
 
 import './Tabela.css'
 
@@ -33,39 +33,37 @@ export default function Tabela(props) {
         <TableCell align="center"><strong>Imagem</strong></TableCell>
         <TableCell align="center"><strong>Classificação</strong></TableCell>
         <TableCell align="center"><strong>Resolvido</strong></TableCell>
-        <TableCell align="center"><strong>Grupo</strong></TableCell>
+        {/* <TableCell align="center"><strong>Grupo</strong></TableCell> */}
       </TableRow>
     </TableHead>
     <TableBody>
 
     {/* corpo da tabela */}
     {props.rows.map(row => (
-      row.visible?
-        // linha
-        <TableRow key={row.id}>
+        <TableRow key={row.pk}>
           <TableCell component="th" scope="row" align="center">
-            {row.email}
+            {Array.isArray(row.email) ? row.email[0] : row.email}
           </TableCell>
           <TableCell component="th" scope="row" align="center">
-            {row.descricao}
+            {row.ticket_description}
           </TableCell>
           <TableCell align="center">
-            {row.bloco}
+            {row.building}
           </TableCell>
           <TableCell align="center">
-            {row.piso}
+            {row.floor}
           </TableCell>
           <TableCell align="center">
-            <IconButton size="small" aria-label="Imagem" onClick={()=>props.handleOpen(row.imagem)} >
+            <IconButton size="small" aria-label="Imagem" onClick={()=>props.handleOpen(row.picture)} >
               <Imagem />
             </IconButton>
             <ModalImage className="imagem" open={props.imageModal} handleClose={props.handleClose} conteudo={props.imagemExibixao}></ModalImage>
           </TableCell>
           <TableCell align="center">
-            <Select name='assunto' value={row.assunto} onClick={()=>props.onClickAssunto(row.id)} onChange={props.handleChangeAssunto}>
+            <Select name='assunto' value={props.assuntos.find(assunto => assunto.pk === row.category).name} onClick={()=>props.onClickAssunto(row.pk)} onChange={props.handleChangeAssunto}>
               {props.assuntos.map(
                 assunto => (
-                  <MenuItem key={assunto.id} value={assunto.conteudo}>{assunto.conteudo}</MenuItem>
+                  <MenuItem key={assunto.pk} value={assunto.name}>{assunto.name}</MenuItem>
                 )
               )}
             </Select>
@@ -75,7 +73,7 @@ export default function Tabela(props) {
               <DoneIcon />
             </Fab>
           </TableCell>
-          <TableCell align="center">
+          {/* <TableCell align="center">
           {row.grupo ? <IconButton size="small" aria-label="Imagem" color="secondary" onClick={()=>props.openGrupo(row.grupo)}>
                           <More />
                         </IconButton>
@@ -83,11 +81,9 @@ export default function Tabela(props) {
                         }
                         <ModalGrupo open={props.grupoModal} handleClose={props.closeGrupo} rows={props.selectedGroup}
                         handleOpen = {props.handleOpen} imageModal={props.imageModal} handleCloseImagem={props.handleClose} conteudo={props.imagemExibixao} />
-          </TableCell>
+          </TableCell> */}
         </TableRow>
-      :<TableRow key={row.id}>
-        {/* ocultado */}
-      </TableRow>
+
     ))}
 
     </TableBody>

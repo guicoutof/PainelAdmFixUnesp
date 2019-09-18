@@ -19,16 +19,16 @@ export default function Menu (props){
                             handleConfirm={props.handleAddConfirm} handleClose={props.handleAddClose}/>
                 <List id="listaElementos" component="nav" aria-label="Main mailbox folders" className="lista">
                     {props.state.assuntos.map(assunto => (
-                    <li key={assunto.id}>
+                    <li key={assunto.pk}>
                         <div>
-                            {assunto.conteudo}
+                            {assunto.name}
                         </div>
                         <IconButton size="small" aria-label="Edit" color="primary"
                                 onClick={() => props.handleEdit(assunto)}>
                                 <EditIcon />
                         </IconButton>
                         <SimpleModal 
-                            tittle="Alterar Assunto" tittleLable="Assunto" value={props.state.assunto.conteudo}
+                            tittle="Alterar Assunto" tittleLable="Assunto" value={props.state.assunto.name}
                             open={props.state.edit} handleChange={props.handleEditChange}
                             handleConfirm={props.handleEditConfirm} handleClose={props.handleEditClose}/>
                         <IconButton size="small" aria-label="Delete" color="secondary"
@@ -36,7 +36,7 @@ export default function Menu (props){
                             <DeleteIcon />
                         </IconButton>
                         <ModalSemInput 
-                            tittle="Alterar Assunto" subTittle="Deseja realmente remover este assunto ?" value={props.state.assunto.conteudo}
+                            tittle="Alterar Assunto" subTittle="Deseja realmente remover este assunto ?" value={props.state.assunto.name}
                             open={props.state.delete}
                             handleConfirm={props.handleRemoveConfirm} handleClose={props.handleRemoveClose}/>
                     </li>
