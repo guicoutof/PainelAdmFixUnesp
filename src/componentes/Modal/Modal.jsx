@@ -93,7 +93,7 @@ export function ModalImage(props){
             onClose={props.handleClose}
             >
             <div className="modalImage">
-                <img src={props.conteudo} height="100%" width="100%" />
+                <img src={props.conteudo} alt="" height="100%" width="100%" />
             </div>
             </Modal>
 }

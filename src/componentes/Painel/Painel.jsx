@@ -4,7 +4,6 @@ import './Painel.css'
 import Button from '@material-ui/core/Button'
 import Pesquisar from './Pesquisar'
 import Tabela from './Tabela'
-import axios from 'axios'
 
 export default class painel extends Component{
     constructor(props){
@@ -70,9 +69,9 @@ export default class painel extends Component{
                 // else if(row.floor.indexOf(pesquisa) !== -1 ) return row
                 // else if(row.building.indexOf(pesquisa) !== -1) return row
                 // else if(row.room.indexOf(pesquisa) !== -1) return row
-                else if(row.floor == pesquisa ) return row
-                else if(row.building == pesquisa ) return row
-                else if(row.room == pesquisa) return row
+                else if(row.floor === pesquisa ) return row
+                else if(row.building === pesquisa ) return row
+                else if(row.room === pesquisa) return row
                 return null
             });
             

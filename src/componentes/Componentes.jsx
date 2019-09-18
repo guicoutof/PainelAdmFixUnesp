@@ -9,11 +9,11 @@ export default class Componentes extends Component{
         super(props)
         this.state = {
             assuntos: [ 
-                {id:1,conteudo:'Buraco'},
-                {id:2,conteudo:'Lampada'},
-                {id:3,conteudo:'Porta'},
+                // {id:1,conteudo:'Buraco'},
+                // {id:2,conteudo:'Lampada'},
+                // {id:3,conteudo:'Porta'},
             ],
-            assunto:{id:0,conteudo:''},
+            assunto:{pk:0,name:''},
             add:false,
             edit:false,
             delete:false,
@@ -36,29 +36,37 @@ export default class Componentes extends Component{
 		this.handleHelp = this.handleHelp.bind(this);
         this.handleHelpClose = this.handleHelpClose.bind(this);
 
+        this.loadCategories();
     }
 
     handleAdd(){
         this.setState({...this.state,add:true});
     }
     handleAddChange(event){
-        this.setState({...this.state,assunto:{id:this.state.assuntos.length+1,conteudo:event.target.value}});
+        this.setState({...this.state,assunto:{pk:this.state.assuntos.length+1,name:event.target.value}});
     }
     handleAddClose(){
         this.setState({...this.state,add:false});
     }
     handleAddConfirm(){
-        const assunto = this.state.assunto.conteudo;
+        const assunto = this.state.assunto.name;
         if(assunto){
-            if(!this.state.assuntos.find((a)=>a.conteudo === assunto)){
-                this.setState(state => {
-                    const assuntos = [...state.assuntos, {id:this.state.assuntos.length+1,conteudo:assunto}];
+            if(!this.state.assuntos.find((a)=>a.name === assunto)){
+                // this.setState(state => {
+                //     const assuntos = [...state.assuntos, {id:this.state.assuntos.length+1,name:assunto}];
 
-                    return {
-                        assuntos,
-                        add:false
-                    }
-                  })
+                //     return {
+                //         assuntos,
+                //         add:false
+                //     }
+                //   })
+
+                this.doCORSRequest({
+                    method: 'POST',
+                    url: 'http://deadpyxel.pythonanywhere.com/api/v1/categories/',
+                    data: {name:assunto,tickets:[]}
+                })
+                this.loadCategories();
             }else alert('Este assunto já existe!!');
         }else alert('Assunto vazio!!');
     }
@@ -67,28 +75,37 @@ export default class Componentes extends Component{
         this.setState({...this.state,edit:true,assunto:assunto});
     }
     handleEditChange(event){
-        this.setState({...this.state,assunto:{id:this.state.assunto.id,conteudo:event.target.value}});
+        this.setState({...this.state,assunto:{pk:this.state.assunto.pk,name:event.target.value}});
     }
     handleEditClose = () => {
         this.setState({...this.state,edit:false});
     };
     handleEditConfirm(){
-        const assuntoConteudo = this.state.assunto.conteudo;
+        const assuntoConteudo = this.state.assunto.name;
         if(assuntoConteudo){
-            if(!this.state.assuntos.find((a)=>a.conteudo === assuntoConteudo)){
-                this.setState(state => {
-                    const assuntos = state.assuntos.map((assunto)=>{
-                        if(assunto.id === this.state.assunto.id){
-                            assunto.conteudo = assuntoConteudo
-                            return assunto
-                        }else return assunto
-                    });
+            if(!this.state.assuntos.find((a)=>a.name === assuntoConteudo)){
+                // this.setState(state => {
+                //     const assuntos = state.assuntos.map((assunto)=>{
+                //         if(assunto.pk === this.state.assunto.pk){
+                //             assunto.name = assuntoConteudo
+                //             return assunto
+                //         }else return assunto
+                //     });
         
-                    return {
-                        assuntos,
-                        edit:false
-                    }
-                })
+                //     return {
+                //         assuntos,
+                //         edit:false
+                //     }
+                // })
+
+                // fazer update
+
+                // this.doCORSRequest({
+                //     method: 'POST',
+                //     url: 'http://deadpyxel.pythonanywhere.com/api/v1/categories/',
+                //     data: ''
+                // })
+
             }else alert('Este assunto já existe!!');
         }else alert('Assunto vazio!!');
     }
@@ -102,7 +119,7 @@ export default class Componentes extends Component{
     }
     handleRemoveConfirm(){
         this.setState(state => {
-            const assuntos = state.assuntos.filter(assunto => assunto.id !== this.state.assunto.id);
+            const assuntos = state.assuntos.filter(assunto => assunto.pk !== this.state.assunto.pk);
       
             return {
               assuntos,
@@ -118,7 +135,43 @@ export default class Componentes extends Component{
 		this.setState({...this.state,help:false});
 	}
 
+    loadCategories() {
+        var url = 'http://deadpyxel.pythonanywhere.com/api/v1/categories/';
+
+        this.doCORSRequest({
+          method: this.id === 'post' ? 'POST' : 'GET',
+          url: url,
+          data: ''
+        }); 
+  
+    } 
     
+    doCORSRequest(options) {
+        //requisicao CORS
+        var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
+        var x = new XMLHttpRequest();
+        x.open(options.method, cors_api_url + options.url);
+        x.onload = function (e) {
+        if (x.readyState === 4) {
+            if (x.status === 200) {
+            var json_obj = JSON.parse(x.responseText);
+            // pegar as categorias cadastradas na api
+            this.setState({assuntos:json_obj})
+
+            } else {
+            console.error(x.statusText);
+            }
+        }
+
+        }.bind(this);
+        x.onerror = function (e) {
+        console.error(x.statusText);
+        };
+        if (/^POST/i.test(options.method)) {
+        x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        }
+        x.send(options.data);
+    }
 
     render(){
         
@@ -141,6 +194,7 @@ export default class Componentes extends Component{
                         handleHelp = {this.handleHelp}
                         handleHelpClose = {this.handleHelpClose} 
                     />
+
                     <Painel assuntos={this.state.assuntos}/>
                 </div>
     }
