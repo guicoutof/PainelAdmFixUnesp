@@ -41,7 +41,6 @@ class Login extends Component {
   render() {
 
     return (
-
       <div className="login" onSubmit={this.handleSignUp}>
         <Paper className="loginPaper">
           <h1 className="titulo">Login</h1>
@@ -61,6 +60,7 @@ class Login extends Component {
             <Button onClick={this.handleSignIn} id="botaoLogin" variant="contained" color="secondary" className="btn">
               Entrar
             </Button>
+
         </Paper>
       </div>
     );
