@@ -4,6 +4,7 @@ import './Painel.css'
 import Button from '@material-ui/core/Button'
 import Pesquisar from './Pesquisar'
 import Tabela from './Tabela'
+import SendEmail from '../../services/mail'
 
 export default class painel extends Component{
     constructor(props){
@@ -21,40 +22,56 @@ export default class painel extends Component{
             imageModal:false, //Modal da imagem
             imagemExibixao:'', //Imagem a ser exibida no modal
             idAssunto:0, //Assunto a ser inserido no campo de classificação 
-            grupos:[], //Lista de grupos definidos
-            groupModal:false, //Modal de exibição do grupo selecionado para visualizacão
-            groupExibir:0,
-            group:[],
+            // grupos:[], //Lista de grupos definidos
+            // groupModal:false, //Modal de exibição do grupo selecionado para visualizacão
+            // groupExibir:0,
+            // group:[],
+            emailModal:false,
             api:{},
             apiLista:'',
-            loading:true
+            emailSend:null,
+            loading:true,
         }
         this.loadTickets()
 
 
         this.pesquisar = this.pesquisar.bind(this)
-        this.handleGrupoCheck = this.handleGrupoCheck.bind(this);
-
+        
         this.handleOpenModalImage = this.handleOpenModalImage.bind(this);
         this.handleCloseModalImage = this.handleCloseModalImage.bind(this);
-
+        
+        this.openEmailModal = this.openEmailModal.bind(this);
+        this.closeEmailModal = this.closeEmailModal.bind(this);
+        
         this.onClickAssunto = this.onClickAssunto.bind(this);
         this.handleChangeAssunto = this.handleChangeAssunto.bind(this);
-
-        this.agrupar = this.agrupar.bind(this);
-
-        this.openGrupo = this.openGrupo.bind(this);
-        this.closeGrupo = this.closeGrupo.bind(this);
         
+        // this.agrupar = this.agrupar.bind(this);
+        // this.handleGrupoCheck = this.handleGrupoCheck.bind(this);
+        // this.openGrupo = this.openGrupo.bind(this);
+        // this.closeGrupo = this.closeGrupo.bind(this);
+
+        this.resolvido = this.resolvido.bind(this);
+    }
+
+    resolvido(mensagem){
+        SendEmail(this.state.emailSend,mensagem);
     }
 
     handleOpenModalImage(imagem){
-
         this.setState({...this.state,imagemExibixao:imagem,imageModal:true});
     }
 
     handleCloseModalImage(){
         this.setState({...this.state,imageModal:false});
+    }
+
+    openEmailModal(emails){
+        this.setState({...this.state,emailModal:true,emailSend:emails});
+    }
+
+    closeEmailModal(){
+        this.setState({...this.state,emailModal:false});
     }
 
     pesquisar(event){
@@ -102,92 +119,94 @@ export default class painel extends Component{
     onClickAssunto(id){
         this.setState({idAssunto:id});
     }
+
+    // mecanismo antigo para agrupar tickets
     
-    handleGrupoCheck(row){
-        this.setState(state=>{
-            const lista = state.lista.map((linha)=>{
-                if(linha.id === row.id){
-                    if(linha.checked)linha.checked=false;
-                    else linha.checked=true;
-                }
-                return linha
-            })
+    // handleGrupoCheck(row){
+    //     this.setState(state=>{
+    //         const lista = state.lista.map((linha)=>{
+    //             if(linha.id === row.id){
+    //                 if(linha.checked)linha.checked=false;
+    //                 else linha.checked=true;
+    //             }
+    //             return linha
+    //         })
             
-            return{lista}
-        })
-    }
+    //         return{lista}
+    //     })
+    // }
     
-    agrupar(){
-        //verificar quem foi checkado e adicionar ao grupo se for compativel
-        if(this.state.lista.filter((linha)=>{if(linha.checked)return linha;return null}).length>=2){
-            let alerta = false;
-            const grupao = this.state.lista.filter((linha)=>{
-                if(linha.checked){
-                    if(this.state.lista.filter((l)=>{
-                        if(l.checked){
-                            if(linha.id !== l.id){
-                                if(l.bloco.indexOf(linha.bloco) !== -1 && l.piso.indexOf(linha.piso) !== -1 && l.assunto.indexOf(linha.assunto) !== -1 &&l.assunto !== '')
-                                return l
-                                else alerta = true;}}return null
-                            }).length >= 1)
-                            return linha
-                        }return null
-                    })
+    // agrupar(){
+    //     //verificar quem foi checkado e adicionar ao grupo se for compativel
+    //     if(this.state.lista.filter((linha)=>{if(linha.checked)return linha;return null}).length>=2){
+    //         let alerta = false;
+    //         const grupao = this.state.lista.filter((linha)=>{
+    //             if(linha.checked){
+    //                 if(this.state.lista.filter((l)=>{
+    //                     if(l.checked){
+    //                         if(linha.id !== l.id){
+    //                             if(l.bloco.indexOf(linha.bloco) !== -1 && l.piso.indexOf(linha.piso) !== -1 && l.assunto.indexOf(linha.assunto) !== -1 &&l.assunto !== '')
+    //                             return l
+    //                             else alerta = true;}}return null
+    //                         }).length >= 1)
+    //                         return linha
+    //                     }return null
+    //                 })
                     
-                    //atualiza a lista da existencia de um novo grupo
-                    let primeiro = true;
-                    const lista = this.state.lista.map((linha)=>{
-                        if(grupao && !alerta){
-                            if(grupao.map((g)=>{
-                                if(linha.id === g.id && primeiro){
-                                    linha.grupo = this.state.grupos.length+1;
-                                    linha.checked = false;
-                                    primeiro = false;
-                                    return linha
-                                }else if(linha.id === g.id){
-                                    linha.grupo = this.state.grupos.length+1;
-                                    linha.checked = false;
-                                    linha.visible = false;
-                                    return linha
-                                }else return linha
-                            }))return linha;else return null
-                        }else return null
-                    })
+    //                 //atualiza a lista da existencia de um novo grupo
+    //                 let primeiro = true;
+    //                 const lista = this.state.lista.map((linha)=>{
+    //                     if(grupao && !alerta){
+    //                         if(grupao.map((g)=>{
+    //                             if(linha.id === g.id && primeiro){
+    //                                 linha.grupo = this.state.grupos.length+1;
+    //                                 linha.checked = false;
+    //                                 primeiro = false;
+    //                                 return linha
+    //                             }else if(linha.id === g.id){
+    //                                 linha.grupo = this.state.grupos.length+1;
+    //                                 linha.checked = false;
+    //                                 linha.visible = false;
+    //                                 return linha
+    //                             }else return linha
+    //                         }))return linha;else return null
+    //                     }else return null
+    //                 })
                     
-                    if(alerta)alert('Há problemas diferentes ou não classificados !!');
-                    else this.setState(state => {
-                        const grupos = [...state.grupos, {id:this.state.grupos.length+1,grupo:grupao}];
+    //                 if(alerta)alert('Há problemas diferentes ou não classificados !!');
+    //                 else this.setState(state => {
+    //                     const grupos = [...state.grupos, {id:this.state.grupos.length+1,grupo:grupao}];
                         
-                        return {
-                            grupos,
-                            lista:lista,
-                            listaExibicao:lista
-                        }
-                    })
+    //                     return {
+    //                         grupos,
+    //                         lista:lista,
+    //                         listaExibicao:lista
+    //                     }
+    //                 })
                     
-                }
-    }
+    //             }
+    // }
     
-    openGrupo(grupo){
-        this.setState(state=>{
-            const groupAux = state.grupos.filter((linha)=>{
-                if(linha.id === grupo)
-                    return linha.grupo
-                else return null
-            })
+    // openGrupo(grupo){
+    //     this.setState(state=>{
+    //         const groupAux = state.grupos.filter((linha)=>{
+    //             if(linha.id === grupo)
+    //                 return linha.grupo
+    //             else return null
+    //         })
 
-            const group = groupAux[0].grupo //correcao
+    //         const group = groupAux[0].grupo //correcao
 
-            return{
-                group,
-                groupModal:true
-            }
-        })
-    }
+    //         return{
+    //             group,
+    //             groupModal:true
+    //         }
+    //     })
+    // }
 
-    closeGrupo(){
-        this.setState({...this.state,groupExibir:0,groupModal:false})
-    }
+    // closeGrupo(){
+    //     this.setState({...this.state,groupExibir:0,groupModal:false})
+    // }
 
     loadTickets() {
         var url = 'http://deadpyxel.pythonanywhere.com/api/v1/tickets';
@@ -197,8 +216,6 @@ export default class painel extends Component{
           url: url,
           data: ''
         });
-        
-  
     } 
     
     doCORSRequest(options) {
@@ -275,13 +292,14 @@ export default class painel extends Component{
     render(){
         return  <div className="painel">
                     <Pesquisar pesquisar={this.pesquisar} />
-                    <Tabela rows={this.state.listaExibicao ? this.state.listaExibicao : this.state.lista} assuntos={this.props.assuntos}
-                        imageModal={this.state.imageModal} handleOpen={this.handleOpenModalImage} handleClose={this.handleCloseModalImage} imagemExibixao={this.state.imagemExibixao}
-                        onClickAssunto = {this.onClickAssunto} handleGrupoCheck={this.handleGrupoCheck} handleChangeAssunto={this.handleChangeAssunto}
-                        openGrupo = {this.openGrupo} grupoModal = {this.state.groupModal} closeGrupo={this.closeGrupo} selectedGroup = {this.state.group}
+                    <Tabela rows={this.state.listaExibicao ? this.state.listaExibicao : this.state.lista} 
+                        assuntos={this.props.assuntos} 
+                        onClickAssunto = {this.onClickAssunto} handleChangeAssunto={this.handleChangeAssunto}
+                        imageModal={this.state.imageModal} handleOpenModalImage={this.handleOpenModalImage} handleCloseModalImage={this.handleCloseModalImage} imagemExibixao={this.state.imagemExibixao}
+                        openEmailModal = {this.openEmailModal} closeEmailModal = {this.closeEmailModal} emailModal = {this.state.emailModal}
+                        resolvido = {this.resolvido}
                         />
-                        {/* {console.log(this.state.lista)} */}
-                    <Button variant="contained" id="btnAgrupar" className="btn btnAgrupar"  >Salvar</Button>
+                    <Button variant="contained" id="btnAgrupar" className="btn btnAgrupar">Salvar</Button>
                 </div>
     }
     

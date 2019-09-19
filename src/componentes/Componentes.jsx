@@ -52,21 +52,21 @@ export default class Componentes extends Component{
         const assunto = this.state.assunto.name;
         if(assunto){
             if(!this.state.assuntos.find((a)=>a.name === assunto)){
-                // this.setState(state => {
-                //     const assuntos = [...state.assuntos, {id:this.state.assuntos.length+1,name:assunto}];
+                this.setState(state => {
+                    const assuntos = [...state.assuntos, {pk:this.state.assuntos.length+1,name:assunto}];
 
-                //     return {
-                //         assuntos,
-                //         add:false
-                //     }
-                //   })
+                    return {
+                        assuntos,
+                        add:false
+                    }
+                  })
 
-                this.doCORSRequest({
-                    method: 'POST',
-                    url: 'http://deadpyxel.pythonanywhere.com/api/v1/categories/',
-                    data: {name:assunto,tickets:[]}
-                })
-                this.loadCategories();
+                // this.doCORSRequest({
+                //     method: 'POST',
+                //     url: 'http://deadpyxel.pythonanywhere.com/api/v1/categories/',
+                //     data: {name:assunto,tickets:[]}
+                // })
+                // this.loadCategories();
             }else alert('Este assunto já existe!!');
         }else alert('Assunto vazio!!');
     }
