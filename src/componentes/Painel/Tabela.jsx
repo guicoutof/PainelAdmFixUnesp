@@ -64,7 +64,7 @@ export default function Tabela(props) {
             <ModalImage className="imagem" open={props.imageModal} handleClose={props.handleCloseModalImage} conteudo={props.imagemExibixao}></ModalImage>
           </TableCell>
           <TableCell align="center">
-            <Select name='assunto' value={props.assuntos.find(assunto => assunto.pk === row.category).name} onClick={()=>props.onClickAssunto(row.pk)} onChange={props.handleChangeAssunto}>
+            <Select name='assunto' value={props.assuntos.find(assunto => assunto.pk === row.category)? props.assuntos.find(assunto => assunto.pk === row.category).name : 'none'} onClick={()=>props.onClickAssunto(row.pk)} onChange={props.handleChangeAssunto}>
               {props.assuntos.map(
                 assunto => (
                   <MenuItem key={assunto.pk} value={assunto.name}>{assunto.name}</MenuItem>

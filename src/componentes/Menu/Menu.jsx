@@ -42,7 +42,7 @@ export default function Menu (props){
                     </li>
                     ))}
                 </List>
-                <Button variant="contained" id="btnHelp" className="btn btnHelp" onClick={()=>props.handleHelp()}>Help</Button>
+                <Button variant="contained" id="btnHelp" className="btn btnHelp" onClick={()=>props.handleHelp()}>Ajuda</Button>
                 <ModalHelp 
                     open={props.state.help}
                     handleClose={props.handleHelpClose}

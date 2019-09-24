@@ -21,7 +21,7 @@ export default class painel extends Component{
             listaExibicao: null,//lista enviada para a tabela exibir
             imageModal:false, //Modal da imagem
             imagemExibixao:'', //Imagem a ser exibida no modal
-            idAssunto:0, //Assunto a ser inserido no campo de classificação 
+            pkChangeAssunto:0, //Assunto a ser inserido no campo de classificação 
             // grupos:[], //Lista de grupos definidos
             // groupModal:false, //Modal de exibição do grupo selecionado para visualizacão
             // groupExibir:0,
@@ -33,7 +33,7 @@ export default class painel extends Component{
             loading:true,
         }
         this.loadTickets()
-
+        
 
         this.pesquisar = this.pesquisar.bind(this)
         
@@ -79,30 +79,39 @@ export default class painel extends Component{
         if(!pesquisa){
             this.setState({listaExibicao:this.state.lista})
         }else{
-            const listar = this.state.lista.filter((row)=>{
-                console.log(row)
+            const lista = this.state.lista.filter((row)=>{
                 if(row.email[0].indexOf(pesquisa) !== -1) return row
                 else if(row.ticket_description.indexOf(pesquisa) !== -1) return row
                 // else if(row.floor.indexOf(pesquisa) !== -1 ) return row
                 // else if(row.building.indexOf(pesquisa) !== -1) return row
                 // else if(row.room.indexOf(pesquisa) !== -1) return row
-                else if(row.floor === pesquisa ) return row
-                else if(row.building === pesquisa ) return row
-                else if(row.room === pesquisa) return row
+                else if(row.floor == pesquisa ) return row
+                else if(row.building == pesquisa ) return row
+                else if(row.room == pesquisa) return row
                 return null
             });
             
-            this.setState({listaExibicao:listar});
+            this.setState({listaExibicao:lista})
         }
     }
 
+    //ira "mudar" para UPDATE na API  
+    
     handleChangeAssunto(event){
         const assunto = event.target.value;
         if(assunto){
             this.setState(state => {
                 const lista = state.lista.map((linha)=>{
-                    if(linha.id === this.state.idAssunto){
-                        linha.assunto = assunto
+                    if(linha.pk === this.state.pkChangeAssunto){//encontrou a linha a ser alterada
+                        const pkCategory = this.props.assuntos.find(a => a.name === assunto).pk
+                        // http://deadpyxel.pythonanywhere.com/api/v1/tickets/{linha.pk}/ para alterar a categoria na linha
+
+                        //http://deadpyxel.pythonanywhere.com/api/v1/categories/{linha.category}/  remover http://deadpyxel.pythonanywhere.com/api/v1/tickets/{linha.pk}/ dos tickets
+
+                        linha.category = pkCategory
+
+                        //http://deadpyxel.pythonanywhere.com/api/v1/categories/{linha.category}/  adicionar http://deadpyxel.pythonanywhere.com/api/v1/tickets/{linha.pk}/ dos tickets
+
                         return linha
                     }else return linha
                 });
@@ -111,16 +120,16 @@ export default class painel extends Component{
                     lista
                 }
             })
-            this.setState({listaExibicao:this.state.lista});
+            // this.setState({listaExibicao:this.state.lista});
         }else alert('Assunto vazio!!');
         
     }
     
     onClickAssunto(id){
-        this.setState({idAssunto:id});
+        this.setState({pkChangeAssunto:id});
     }
 
-    // mecanismo antigo para agrupar tickets
+    // mecanismo antigo de agrupar tickets
     
     // handleGrupoCheck(row){
     //     this.setState(state=>{
@@ -292,14 +301,14 @@ export default class painel extends Component{
     render(){
         return  <div className="painel">
                     <Pesquisar pesquisar={this.pesquisar} />
-                    <Tabela rows={this.state.listaExibicao ? this.state.listaExibicao : this.state.lista} 
+                    <Tabela rows={this.state.listaExibicao? this.state.listaExibicao : this.state.lista} 
                         assuntos={this.props.assuntos} 
                         onClickAssunto = {this.onClickAssunto} handleChangeAssunto={this.handleChangeAssunto}
                         imageModal={this.state.imageModal} handleOpenModalImage={this.handleOpenModalImage} handleCloseModalImage={this.handleCloseModalImage} imagemExibixao={this.state.imagemExibixao}
                         openEmailModal = {this.openEmailModal} closeEmailModal = {this.closeEmailModal} emailModal = {this.state.emailModal}
                         resolvido = {this.resolvido}
                         />
-                    <Button variant="contained" id="btnAgrupar" className="btn btnAgrupar">Salvar</Button>
+                    {/* <Button variant="contained" id="btnAgrupar" className="btn btnAgrupar">Salvar</Button> */}
                 </div>
     }
     

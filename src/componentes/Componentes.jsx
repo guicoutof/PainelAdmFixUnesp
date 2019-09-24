@@ -117,6 +117,7 @@ export default class Componentes extends Component{
     handleRemoveClose(){
         this.setState({...this.state,delete:false});
     }
+    
     handleRemoveConfirm(){
         this.setState(state => {
             const assuntos = state.assuntos.filter(assunto => assunto.pk !== this.state.assunto.pk);

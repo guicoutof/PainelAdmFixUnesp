@@ -58,7 +58,7 @@ export function ModalHelp(props){
 				onClose={props.handleClose}
                 >
                 <div className="modalHelp">
-                    <h1 className="tituloModal">Help</h1>
+                    <h1 className="tituloModal">Ajuda</h1>
 					<div className="text">
                         <br></br>
                         <p>É necessario definir um assunto para que os assuntos em comum e que estão no mesmo local possam ser combinados.</p>
