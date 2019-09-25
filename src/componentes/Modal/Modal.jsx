@@ -98,7 +98,7 @@ export function ModalEmail(props){
     open={props.open}
     onClose={props.handleClose}
     >
-    <div className="modal">
+    <div className="modalEditor">
         <h2 id="modal-title">{props.tittle}</h2>
         <h4 id="modal-title">{props.subtittle}</h4>
         <CKEditor

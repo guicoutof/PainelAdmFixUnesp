@@ -45,7 +45,7 @@ class Login extends Component {
         <Paper className="loginPaper">
           <h1 className="titulo">Login</h1>
           <div className="alert alert-info">
-                    Username: diego@rocketseat.com.br<br />
+                    Username: guilherme@couto.com.br<br />
                     Password: 123456
                 </div>
           {this.state.error && <p>{this.state.error}</p>}
