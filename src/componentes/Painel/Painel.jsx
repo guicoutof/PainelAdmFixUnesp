@@ -1,40 +1,26 @@
 import React, { Component } from 'react';
 import './Painel.css'
 
-import Button from '@material-ui/core/Button'
 import Pesquisar from './Pesquisar'
 import Tabela from './Tabela'
 import SendEmail from '../../services/mail'
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 export default class painel extends Component{
     constructor(props){
         super(props)
-        this.state = { lista: [
-            // {id:1,email:'guilherme.couto@unesp.br',descricao:'Buraco no meio da rua',bloco:'D1',piso:'1',imagem:'Imagem 1',assunto:'',checked:false,grupo:0,visible:true},
-            // {id:2,email:'gabriel@unesp.com.br',descricao: 'Buraco no meio da rua',bloco:'D1',piso:'1',imagem:'Imagem 2',assunto:'',checked:false,grupo:0,visible:true},
-            // {id:3,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',assunto:'',checked:false,grupo:0,visible:true},
-            // {id:4,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',assunto:'',checked:false,grupo:0,visible:true},
-            // {id:5,email:'vinicius@unesp.br',descricao:'Lampada queimada',bloco:'D2',piso:'1',imagem:'Imagem 3',assunto:'',checked:false,grupo:0,visible:true},
-            // {id:6,email:'leo.yudi@unesp.br',descricao:'Lampada queimada',bloco:'D4',piso:'1',imagem:'Imagem 4',assunto:'',checked:false,grupo:0,visible:true},
-            
-            ],
+        this.state = { lista: [],//lista que conterá os dados recebidos pela api
             listaExibicao: null,//lista enviada para a tabela exibir
             imageModal:false, //Modal da imagem
             imagemExibixao:'', //Imagem a ser exibida no modal
             pkChangeAssunto:0, //Assunto a ser inserido no campo de classificação 
-            // grupos:[], //Lista de grupos definidos
-            // groupModal:false, //Modal de exibição do grupo selecionado para visualizacão
-            // groupExibir:0,
-            // group:[],
-            emailModal:false,
-            api:{},
-            apiLista:'',
-            emailSend:null,
+            emailModal:false, //Modal do Editor
+            api:{}, //dados da api
+            apiLista:'',//auxiliar usado na racepção dos dados
+            emailSend:null,//lista de email que serão enviados mensagem de feedback
             loading:true,
         }
         this.loadTickets()
         
-
         this.pesquisar = this.pesquisar.bind(this)
         
         this.handleOpenModalImage = this.handleOpenModalImage.bind(this);
@@ -65,15 +51,19 @@ export default class painel extends Component{
     handleCloseModalImage(){
         this.setState({...this.state,imageModal:false});
     }
-
+    
     openEmailModal(emails){
         this.setState({...this.state,emailModal:true,emailSend:emails});
     }
-
+    
     closeEmailModal(){
         this.setState({...this.state,emailModal:false});
     }
-
+    
+    onClickAssunto(id){
+        this.setState({pkChangeAssunto:id});
+    }
+    
     pesquisar(event){
         const pesquisa = event.target.value;
         if(!pesquisa){
@@ -82,12 +72,9 @@ export default class painel extends Component{
             const lista = this.state.lista.filter((row)=>{
                 if(row.email[0].indexOf(pesquisa) !== -1) return row
                 else if(row.ticket_description.indexOf(pesquisa) !== -1) return row
-                // else if(row.floor.indexOf(pesquisa) !== -1 ) return row
-                // else if(row.building.indexOf(pesquisa) !== -1) return row
-                // else if(row.room.indexOf(pesquisa) !== -1) return row
-                else if(row.floor == pesquisa ) return row
-                else if(row.building == pesquisa ) return row
-                else if(row.room == pesquisa) return row
+                else if(row.floor === +pesquisa ) return row
+                else if(row.building === +pesquisa ) return row
+                else if(row.room === +pesquisa) return row
                 return null
             });
             
@@ -124,98 +111,6 @@ export default class painel extends Component{
         }else alert('Assunto vazio!!');
         
     }
-    
-    onClickAssunto(id){
-        this.setState({pkChangeAssunto:id});
-    }
-
-    // mecanismo antigo de agrupar tickets
-    
-    // handleGrupoCheck(row){
-    //     this.setState(state=>{
-    //         const lista = state.lista.map((linha)=>{
-    //             if(linha.id === row.id){
-    //                 if(linha.checked)linha.checked=false;
-    //                 else linha.checked=true;
-    //             }
-    //             return linha
-    //         })
-            
-    //         return{lista}
-    //     })
-    // }
-    
-    // agrupar(){
-    //     //verificar quem foi checkado e adicionar ao grupo se for compativel
-    //     if(this.state.lista.filter((linha)=>{if(linha.checked)return linha;return null}).length>=2){
-    //         let alerta = false;
-    //         const grupao = this.state.lista.filter((linha)=>{
-    //             if(linha.checked){
-    //                 if(this.state.lista.filter((l)=>{
-    //                     if(l.checked){
-    //                         if(linha.id !== l.id){
-    //                             if(l.bloco.indexOf(linha.bloco) !== -1 && l.piso.indexOf(linha.piso) !== -1 && l.assunto.indexOf(linha.assunto) !== -1 &&l.assunto !== '')
-    //                             return l
-    //                             else alerta = true;}}return null
-    //                         }).length >= 1)
-    //                         return linha
-    //                     }return null
-    //                 })
-                    
-    //                 //atualiza a lista da existencia de um novo grupo
-    //                 let primeiro = true;
-    //                 const lista = this.state.lista.map((linha)=>{
-    //                     if(grupao && !alerta){
-    //                         if(grupao.map((g)=>{
-    //                             if(linha.id === g.id && primeiro){
-    //                                 linha.grupo = this.state.grupos.length+1;
-    //                                 linha.checked = false;
-    //                                 primeiro = false;
-    //                                 return linha
-    //                             }else if(linha.id === g.id){
-    //                                 linha.grupo = this.state.grupos.length+1;
-    //                                 linha.checked = false;
-    //                                 linha.visible = false;
-    //                                 return linha
-    //                             }else return linha
-    //                         }))return linha;else return null
-    //                     }else return null
-    //                 })
-                    
-    //                 if(alerta)alert('Há problemas diferentes ou não classificados !!');
-    //                 else this.setState(state => {
-    //                     const grupos = [...state.grupos, {id:this.state.grupos.length+1,grupo:grupao}];
-                        
-    //                     return {
-    //                         grupos,
-    //                         lista:lista,
-    //                         listaExibicao:lista
-    //                     }
-    //                 })
-                    
-    //             }
-    // }
-    
-    // openGrupo(grupo){
-    //     this.setState(state=>{
-    //         const groupAux = state.grupos.filter((linha)=>{
-    //             if(linha.id === grupo)
-    //                 return linha.grupo
-    //             else return null
-    //         })
-
-    //         const group = groupAux[0].grupo //correcao
-
-    //         return{
-    //             group,
-    //             groupModal:true
-    //         }
-    //     })
-    // }
-
-    // closeGrupo(){
-    //     this.setState({...this.state,groupExibir:0,groupModal:false})
-    // }
 
     loadTickets() {
         var url = 'http://deadpyxel.pythonanywhere.com/api/v1/tickets';
@@ -236,7 +131,8 @@ export default class painel extends Component{
         if (x.readyState === 4) {
             if (x.status === 200) {
             var json_obj = JSON.parse(x.responseText);
-            // pegar os tickets de todas as paginas na api
+
+            // pegar os tickets de todas as paginas da api
             this.setState(state => {
                 var tickets = []
                 const apiLista = tickets.concat(...state.apiLista,json_obj.results)
@@ -300,7 +196,11 @@ export default class painel extends Component{
 
     render(){
         return  <div className="painel">
-                    <Pesquisar pesquisar={this.pesquisar} />
+            <Pesquisar pesquisar={this.pesquisar} />
+                    {
+                    this.state.loading ? 
+                    <CircularProgress color="primary"  className="loading"/>
+                    : 
                     <Tabela rows={this.state.listaExibicao? this.state.listaExibicao : this.state.lista} 
                         assuntos={this.props.assuntos} 
                         onClickAssunto = {this.onClickAssunto} handleChangeAssunto={this.handleChangeAssunto}
@@ -308,7 +208,7 @@ export default class painel extends Component{
                         openEmailModal = {this.openEmailModal} closeEmailModal = {this.closeEmailModal} emailModal = {this.state.emailModal}
                         resolvido = {this.resolvido}
                         />
-                    {/* <Button variant="contained" id="btnAgrupar" className="btn btnAgrupar">Salvar</Button> */}
+                    }
                 </div>
     }
     

@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit'
 import SimpleModal,{ ModalSemInput, ModalHelp } from '../Modal/Modal'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import './Menu.css'
 
@@ -17,6 +18,9 @@ export default function Menu (props){
                             tittle="Adicionar Assunto" tittleLable="Assunto" open={props.state.add}
                             handleChange={props.handleAddChange}
                             handleConfirm={props.handleAddConfirm} handleClose={props.handleAddClose}/>
+                {props.loading?
+                <CircularProgress color="secondary"  className="loading"/>
+                :
                 <List id="listaElementos" component="nav" aria-label="Main mailbox folders" className="lista">
                     {props.state.assuntos.map(assunto => (
                     <li key={assunto.pk}>
@@ -42,6 +46,7 @@ export default function Menu (props){
                     </li>
                     ))}
                 </List>
+                }
                 <Button variant="contained" id="btnHelp" className="btn btnHelp" onClick={()=>props.handleHelp()}>Ajuda</Button>
                 <ModalHelp 
                     open={props.state.help}

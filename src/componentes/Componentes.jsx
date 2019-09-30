@@ -17,7 +17,8 @@ export default class Componentes extends Component{
             add:false,
             edit:false,
             delete:false,
-			help:false,
+            help:false,
+            loading:true,
         }
         this.handleAdd = this.handleAdd.bind(this);
         this.handleAddChange = this.handleAddChange.bind(this);
@@ -157,8 +158,7 @@ export default class Componentes extends Component{
             if (x.status === 200) {
             var json_obj = JSON.parse(x.responseText);
             // pegar as categorias cadastradas na api
-            this.setState({assuntos:json_obj})
-
+            this.setState({assuntos:json_obj,loading:false})
             } else {
             console.error(x.statusText);
             }
@@ -194,8 +194,9 @@ export default class Componentes extends Component{
                 
                         handleHelp = {this.handleHelp}
                         handleHelpClose = {this.handleHelpClose} 
-                    />
 
+                        loading = {this.state.loading}
+                    />
                     <Painel assuntos={this.state.assuntos}/>
                 </div>
     }
