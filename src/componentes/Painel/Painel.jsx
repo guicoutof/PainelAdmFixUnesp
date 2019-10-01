@@ -5,6 +5,7 @@ import Pesquisar from './Pesquisar'
 import Tabela from './Tabela'
 import SendEmail from '../../services/mail'
 import CircularProgress from '@material-ui/core/CircularProgress';
+
 export default class painel extends Component{
     constructor(props){
         super(props)

@@ -14,6 +14,7 @@ import DoneIcon from '@material-ui/icons/Done'
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import { ModalImage, ModalEmail } from '../Modal/Modal'
+import Tooltip from '@material-ui/core/Tooltip';
 
 import './Tabela.css'
 
@@ -43,7 +44,11 @@ export default function Tabela(props) {
       props.rows.map(row => (
         <TableRow key={row.pk}>
           <TableCell component="th" scope="row" align="center">
-            {Array.isArray(row.email) ? row.email[0] + ` + ${row.email.length -1} pessoas` : row.email}
+            <Tooltip title={row.email}>
+              <div>
+                {Array.isArray(row.email) ? row.email[0] + ` + ${row.email.length -1} pessoas` : row.email}
+              </div>
+            </Tooltip>
           </TableCell>
           <TableCell component="th" scope="row" align="center">
             {row.ticket_description}

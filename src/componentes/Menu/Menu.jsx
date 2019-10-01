@@ -7,6 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit'
 import SimpleModal,{ ModalSemInput, ModalHelp } from '../Modal/Modal'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import './Menu.css'
 
@@ -30,18 +31,22 @@ export default function Menu (props){
                                 <div>
                                     {assunto.name}
                                 </div>
-                                <IconButton size="small" aria-label="Edit" color="primary"
+                                <Tooltip title="Alterar">
+                                    <IconButton size="small" aria-label="Edit" color="primary"
                                         onClick={() => props.handleEdit(assunto)}>
                                         <EditIcon />
-                                </IconButton>
+                                    </IconButton>
+                                </Tooltip>
                                 <SimpleModal 
                                     tittle="Alterar Assunto" tittleLable="Assunto" value={props.state.assunto.name}
                                     open={props.state.edit} handleChange={props.handleEditChange}
                                     handleConfirm={props.handleEditConfirm} handleClose={props.handleEditClose}/>
-                                <IconButton size="small" aria-label="Delete" color="secondary"
-                                    onClick={() => props.handleRemove(assunto)}>
-                                    <DeleteIcon />
-                                </IconButton>
+                                <Tooltip title="Deletar">
+                                    <IconButton size="small" aria-label="Delete" color="secondary"
+                                        onClick={() => props.handleRemove(assunto)}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Tooltip>
                                 <ModalSemInput 
                                     tittle="Remover Assunto" subTittle="Deseja realmente remover este assunto ?" value={props.state.assunto.name}
                                     open={props.state.delete}
