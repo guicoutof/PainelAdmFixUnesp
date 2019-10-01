@@ -34,13 +34,13 @@ export default function Tabela(props) {
         <TableCell align="center"><strong>Imagem</strong></TableCell>
         <TableCell align="center"><strong>Classificação</strong></TableCell>
         <TableCell align="center"><strong>Resolvido</strong></TableCell>
-        {/* <TableCell align="center"><strong>Grupo</strong></TableCell> */}
       </TableRow>
     </TableHead>
     <TableBody>
 
     {/* corpo da tabela */}
-    {props.rows.map(row => (
+    {
+      props.rows.map(row => (
         <TableRow key={row.pk}>
           <TableCell component="th" scope="row" align="center">
             {Array.isArray(row.email) ? row.email[0] + ` + ${row.email.length -1} pessoas` : row.email}
@@ -65,11 +65,13 @@ export default function Tabela(props) {
           </TableCell>
           <TableCell align="center">
             <Select name='assunto' value={props.assuntos.find(assunto => assunto.pk === row.category)? props.assuntos.find(assunto => assunto.pk === row.category).name : 'none'} onClick={()=>props.onClickAssunto(row.pk)} onChange={props.handleChangeAssunto}>
-              {props.assuntos.map(
-                assunto => (
-                  <MenuItem key={assunto.pk} value={assunto.name}>{assunto.name}</MenuItem>
+              {
+                props.assuntos.map(
+                  assunto => (
+                    <MenuItem key={assunto.pk} value={assunto.name}>{assunto.name}</MenuItem>
+                  )
                 )
-              )}
+              }
             </Select>
           </TableCell>
           <TableCell align="center">
@@ -79,22 +81,13 @@ export default function Tabela(props) {
             <ModalEmail tittle='Ticket Resolvido' subtittle='Escreva uma mensagem de feedback.' open={props.emailModal} handleClose={props.closeEmailModal}
             handleConfirm = {props.resolvido}></ModalEmail>
           </TableCell>
-          {/* <TableCell align="center">
-          {row.grupo ? <IconButton size="small" aria-label="Imagem" color="secondary" onClick={()=>props.openGrupo(row.grupo)}>
-                          <More />
-                        </IconButton>
-                          : <Checkbox color="secondary" defaultChecked={row.checked} onChange={()=>props.handleGrupoCheck(row)}/>
-                        }
-                        <ModalGrupo open={props.grupoModal} handleClose={props.closeGrupo} rows={props.selectedGroup}
-                        handleOpen = {props.handleOpen} imageModal={props.imageModal} handleCloseImagem={props.handleClose} conteudo={props.imagemExibixao} />
-          </TableCell> */}
         </TableRow>
-
-    ))}
-
+      ))
+    }
     </TableBody>
-        </Table>
-      </Paper>
-    );
+  </Table>
+  </Paper>
+  );
+
   }
 
