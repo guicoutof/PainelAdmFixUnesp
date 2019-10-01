@@ -168,7 +168,6 @@ export default class painel extends Component{
 
     
     checkTickets(){
-        console.log(this.state.apiLista)
         if(!this.state.loading){
             this.setState(state => {
                 var drop = [];   //vetor auxiliar para concatenar tickets que ja foi adicionados (simplificar tickets)

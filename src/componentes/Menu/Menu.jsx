@@ -40,7 +40,7 @@ export default function Menu (props){
                             <DeleteIcon />
                         </IconButton>
                         <ModalSemInput 
-                            tittle="Alterar Assunto" subTittle="Deseja realmente remover este assunto ?" value={props.state.assunto.name}
+                            tittle="Remover Assunto" subTittle="Deseja realmente remover este assunto ?" value={props.state.assunto.name}
                             open={props.state.delete}
                             handleConfirm={props.handleRemoveConfirm} handleClose={props.handleRemoveClose}/>
                     </li>
