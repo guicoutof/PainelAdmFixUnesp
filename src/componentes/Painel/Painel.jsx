@@ -9,17 +9,15 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 export default class painel extends Component{
     constructor(props){
         super(props)
-        this.state = { lista: [],//lista que conterá os dados recebidos pela api
-            listaExibicao: null,//lista enviada para a tabela exibir
-            imageModal:false, //Modal da imagem
-            imagemExibixao:'', //Imagem a ser exibida no modal
-            pkChangeAssunto:0, //Assunto a ser inserido no campo de classificação 
-            emailModal:false, //Modal do Editor
-            api:{}, //dados da api
-            apiLista:[],//auxiliar usado na racepção dos dados
-            emailSend:null,//lista de email que serão enviados mensagem de feedback
-            loading:true,
-            // drop:[] //vetor que contem linhas que já foram processadas
+        this.state = { lista: [],   //lista que conterá os dados recebidos pela api
+            listaExibicao: null,    //lista enviada para a tabela exibir
+            imageModal:false,       //Modal da imagem
+            imagemExibixao:'',      //Imagem a ser exibida no modal
+            pkChangeAssunto:0,      //Assunto a ser inserido no campo de classificação 
+            emailModal:false,       //Modal do Editor
+            api:{},                 //dados da api
+            emailSend:null,         //lista de email que serão enviados mensagem de feedback
+            loading:true,           //variavel de loading
         }
         this.loadTickets()
         
@@ -34,11 +32,6 @@ export default class painel extends Component{
         this.onClickAssunto = this.onClickAssunto.bind(this);
         this.handleChangeAssunto = this.handleChangeAssunto.bind(this);
         
-        // this.agrupar = this.agrupar.bind(this);
-        // this.handleGrupoCheck = this.handleGrupoCheck.bind(this);
-        // this.openGrupo = this.openGrupo.bind(this);
-        // this.closeGrupo = this.closeGrupo.bind(this);
-
         this.resolvido = this.resolvido.bind(this);
     }
 
@@ -137,7 +130,7 @@ export default class painel extends Component{
             // pegar os tickets de todas as paginas da api
             this.setState(state => {
                 var tickets = []
-                const apiLista = tickets.concat(...state.apiLista,json_obj.results)
+                const lista = tickets.concat(...state.lista,json_obj.results)
                 if(json_obj.next)
                     this.doCORSRequest({
                         method: this.id === 'post' ? 'POST' : 'GET',
@@ -146,7 +139,7 @@ export default class painel extends Component{
                     });
 
                 return{
-                    apiLista,
+                    lista,
                     api:json_obj,
                     loading:false
                 }
@@ -172,14 +165,13 @@ export default class painel extends Component{
         if(!this.state.loading){
             this.setState(state => {
                 var drop = [];   //vetor auxiliar para concatenar tickets que ja foi adicionados (simplificar tickets)
-                let listaAux=[];
-                listaAux = state.apiLista;
+                let listaAux = state.lista;
                 const lista = listaAux.filter(row=>{
                     var array = [] // vetor auxiliar para concatenar emails
                     if(drop.indexOf(row) === -1){
                             listaAux.map(r=>{
                                 if(row.category === r.category && row.floor === r.floor && row.room === r.room && row.building === r.building && row.pk !== r.pk ){
-                                    row.email = array.concat(row.email,r.email);
+                                    row.email = array.concat(row.email,';'+r.email);
                                     drop.push(r);
                                 }return null
                             })
@@ -190,8 +182,7 @@ export default class painel extends Component{
 
                 return{
                     lista,
-                    drop,
-                    apiLista:lista
+                    drop
                 }
 
             })
