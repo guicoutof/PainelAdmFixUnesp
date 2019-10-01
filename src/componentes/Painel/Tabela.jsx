@@ -43,7 +43,7 @@ export default function Tabela(props) {
     {props.rows.map(row => (
         <TableRow key={row.pk}>
           <TableCell component="th" scope="row" align="center">
-            {Array.isArray(row.email) ? row.email[0] : row.email}
+            {Array.isArray(row.email) ? row.email[0] + ` + ${row.email.length -1} pessoas` : row.email}
           </TableCell>
           <TableCell component="th" scope="row" align="center">
             {row.ticket_description}

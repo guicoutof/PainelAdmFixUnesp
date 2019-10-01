@@ -15,9 +15,10 @@ export default class painel extends Component{
             pkChangeAssunto:0, //Assunto a ser inserido no campo de classificação 
             emailModal:false, //Modal do Editor
             api:{}, //dados da api
-            apiLista:'',//auxiliar usado na racepção dos dados
+            apiLista:[],//auxiliar usado na racepção dos dados
             emailSend:null,//lista de email que serão enviados mensagem de feedback
             loading:true,
+            // drop:[] //vetor que contem linhas que já foram processadas
         }
         this.loadTickets()
         
@@ -165,28 +166,32 @@ export default class painel extends Component{
         x.send(options.data);
     }
 
+    
     checkTickets(){
+        console.log(this.state.apiLista)
         if(!this.state.loading){
             this.setState(state => {
-                var drop = []   //vetor auxiliar para concatenar tickets que ja foi adicionados (simplificar tickets)
-                const lista = state.apiLista.filter(row=>{
+                var drop = [];   //vetor auxiliar para concatenar tickets que ja foi adicionados (simplificar tickets)
+                let listaAux=[];
+                listaAux = state.apiLista;
+                const lista = listaAux.filter(row=>{
                     var array = [] // vetor auxiliar para concatenar emails
-                    var dropAux = []   //vetor auxiliar para concatenar tickets que ja foi adicionados (simplificar tickets)
                     if(drop.indexOf(row) === -1){
-                        for(var i=row.pk;i<state.apiLista.length;i++){
-                            var r = state.apiLista[i];
-                            if(row.category === r.category && row.floor === r.floor && row.room === r.room && row.building === r.building && row.pk !== r.pk ){
-                                row.email = array.concat(row.email,r.email);
-                                drop = dropAux.concat(drop,r);
-                            }
-                        }
+                            listaAux.map(r=>{
+                                if(row.category === r.category && row.floor === r.floor && row.room === r.room && row.building === r.building && row.pk !== r.pk ){
+                                    row.email = array.concat(row.email,r.email);
+                                    drop.push(r);
+                                }return null
+                            })
                         return row;
                     }
                     else return null
                 })
 
                 return{
-                    lista
+                    lista,
+                    drop,
+                    apiLista:lista
                 }
 
             })
