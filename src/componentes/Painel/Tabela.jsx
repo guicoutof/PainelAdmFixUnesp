@@ -46,7 +46,7 @@ export default function Tabela(props) {
           <TableCell component="th" scope="row" align="center">
             <Tooltip title={row.email||'none'}>
               <div>
-                {Array.isArray(row.email) ? row.email[0] + ` e ${row.email.length -1} pessoas` : row.email}
+                {Array.isArray(row.email) ? row.email[0] + ` e ${row.email.length-1} pessoas` : row.email}
               </div>
             </Tooltip>
           </TableCell>

@@ -65,12 +65,14 @@ export default class painel extends Component{
             this.setState({listaExibicao:this.state.lista})
         }else{
             const lista = this.state.lista.filter((row)=>{
-                if(row.email[0].indexOf(pesquisa) !== -1) return row
-                else if(row.ticket_description.indexOf(pesquisa) !== -1) return row
-                else if(row.floor === +pesquisa ) return row
-                else if(row.building === +pesquisa ) return row
-                else if(row.room === +pesquisa) return row
-                return null
+            if(row.email != null && row.email[0].indexOf(pesquisa) !== -1 || 
+                row.ticket_description.indexOf(pesquisa) !== -1 ||
+                row.floor === +pesquisa ||
+                row.building === +pesquisa ||
+                row.room === +pesquisa ||
+                this.props.assuntos.find(a => a.pk === row.category).name.indexOf(pesquisa) !== -1
+                ) return row
+            else return null
             });
             
             this.setState({listaExibicao:lista})
