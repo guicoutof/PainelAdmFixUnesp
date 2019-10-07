@@ -17,6 +17,7 @@ export default class painel extends Component{
             emailModal:false,       //Modal do Editor
             api:{},                 //dados da api
             emailSend:null,         //lista de email que serão enviados mensagem de feedback
+            pkEmail:0,              //chave do ticket que será concluido e removido
             loading:true,           //variavel de loading
         }
         this.loadTickets()
@@ -28,15 +29,45 @@ export default class painel extends Component{
         
         this.openEmailModal = this.openEmailModal.bind(this);
         this.closeEmailModal = this.closeEmailModal.bind(this);
+        this.concluir = this.concluir.bind(this);
+        this.resolvido = this.resolvido.bind(this);
         
         this.onClickAssunto = this.onClickAssunto.bind(this);
         this.handleChangeAssunto = this.handleChangeAssunto.bind(this);
         
-        this.resolvido = this.resolvido.bind(this);
     }
 
     resolvido(mensagem){
-        SendEmail(this.state.emailSend,mensagem);
+        // this.state.emailSend
+        console.log('Envio Email')
+        SendEmail(['guicoutof@gmail.com','guilherme.couto@unesp.br'],mensagem);
+        this.concluir();
+    }
+
+    concluir(){
+        const ticket = this.state.lista.find(row=>{
+            if(row.pk === this.state.pkEmail)return row;
+            return null;
+        })
+        this.state.lista.map(row=>{
+            if(ticket !== null && row.category === ticket.category && row.floor === ticket.floor &&
+                row.room === ticket.room && row.building === ticket.building)
+                this.doCORSRequest({
+                    method: 'DELETE',
+                    url: `http://deadpyxel.pythonanywhere.com/api/v1/tickets/${ticket.pk}/`,
+                    data: ''
+                  });
+                return null;
+        })
+        this.setState({emailModal:false});
+    }
+    
+    openEmailModal(row){
+        this.setState({...this.state,emailModal:true,emailSend:row.email,pkEmail:row.pk});
+    }
+    
+    closeEmailModal(){
+        this.setState({...this.state,emailModal:false});
     }
 
     handleOpenModalImage(imagem){
@@ -45,14 +76,6 @@ export default class painel extends Component{
 
     handleCloseModalImage(){
         this.setState({...this.state,imageModal:false});
-    }
-    
-    openEmailModal(emails){
-        this.setState({...this.state,emailModal:true,emailSend:emails});
-    }
-    
-    closeEmailModal(){
-        this.setState({...this.state,emailModal:false});
     }
     
     onClickAssunto(id){
@@ -65,13 +88,13 @@ export default class painel extends Component{
             this.setState({listaExibicao:this.state.lista})
         }else{
             const lista = this.state.lista.filter((row)=>{
-            if(row.email != null && row.email[0].indexOf(pesquisa) !== -1 || 
+            if((row.email != null) && (row.email[0].indexOf(pesquisa) !== -1 || 
                 row.ticket_description.indexOf(pesquisa) !== -1 ||
                 row.floor === +pesquisa ||
                 row.building === +pesquisa ||
                 row.room === +pesquisa ||
                 this.props.assuntos.find(a => a.pk === row.category).name.indexOf(pesquisa) !== -1
-                ) return row
+            )) return row
             else return null
             });
             
@@ -89,10 +112,13 @@ export default class painel extends Component{
                     if(linha.pk === this.state.pkChangeAssunto){//encontrou a linha a ser alterada
                         const pkCategory = this.props.assuntos.find(a => a.name === assunto).pk
                         // http://deadpyxel.pythonanywhere.com/api/v1/tickets/{linha.pk}/ para alterar a categoria na linha
+                        this.doCORSRequest({
+                            method: 'PATCH',
+                            url: `http://deadpyxel.pythonanywhere.com/api/v1/tickets/${linha.pk}/`,
+                            data: {"category":pkCategory}
+                          });
 
                         //http://deadpyxel.pythonanywhere.com/api/v1/categories/{linha.category}/  remover http://deadpyxel.pythonanywhere.com/api/v1/tickets/{linha.pk}/ dos tickets
-
-                        linha.category = pkCategory
 
                         //http://deadpyxel.pythonanywhere.com/api/v1/categories/{linha.category}/  adicionar http://deadpyxel.pythonanywhere.com/api/v1/tickets/{linha.pk}/ dos tickets
 
@@ -204,7 +230,7 @@ export default class painel extends Component{
                         onClickAssunto = {this.onClickAssunto} handleChangeAssunto={this.handleChangeAssunto}
                         imageModal={this.state.imageModal} handleOpenModalImage={this.handleOpenModalImage} handleCloseModalImage={this.handleCloseModalImage} imagemExibixao={this.state.imagemExibixao}
                         openEmailModal = {this.openEmailModal} closeEmailModal = {this.closeEmailModal} emailModal = {this.state.emailModal}
-                        resolvido = {this.resolvido}
+                        resolvido = {this.resolvido} concluir = {this.concluir}
                         />
                     }
                 </div>

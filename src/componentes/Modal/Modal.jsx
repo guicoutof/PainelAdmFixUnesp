@@ -119,9 +119,11 @@ export function ModalEmail(props){
                         // console.log( 'Focus.', editor );
                     } }
                 />
-        <div className="btns">
+        <div className="btns3">
             <Button id="confirm" variant="contained" color="primary" 
                 onClick={()=>props.handleConfirm(mensagem)}>Enviar</Button>
+                <Button id="confirm" variant="contained" className="btnGreen" 
+                onClick={()=>props.handleConfirmSEmail()}>Concluir Sem Mensagem</Button>
             <Button variant="contained" color="secondary"
                 onClick={props.handleClose}>Cancelar</Button>
         </div>
