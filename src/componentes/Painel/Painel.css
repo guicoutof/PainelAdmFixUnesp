@@ -12,3 +12,8 @@
     margin-left: auto !important;
     width: 10% !important;
 }
+
+.loading{
+    align-self: center;
+
+}
