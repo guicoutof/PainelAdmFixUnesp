@@ -8,8 +8,8 @@ import { isAuthenticated,logout } from "../../services/auth";
 export default () =>
 	<div id="header">
 		<img className="logo" src={Logo} alt="Logo"></img>
-		<h1 className="titulo">Painel administrativo Fix.Unesp</h1>
+		<h1 className="titulo">Painel Administrativo Fix Unesp</h1>
 			{isAuthenticated() ? 
-				<button className="sair" onClick={()=>logout()}>sair </button>
+				<button className="sair" onClick={()=>logout()}>Sair </button>
 			:<div></div>}
 	</div>

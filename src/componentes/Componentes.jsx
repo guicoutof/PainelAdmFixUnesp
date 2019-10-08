@@ -17,7 +17,8 @@ export default class Componentes extends Component{
             add:false,
             edit:false,
             delete:false,
-			help:false,
+            help:false,
+            loading:true,
         }
         this.handleAdd = this.handleAdd.bind(this);
         this.handleAddChange = this.handleAddChange.bind(this);
@@ -52,21 +53,22 @@ export default class Componentes extends Component{
         const assunto = this.state.assunto.name;
         if(assunto){
             if(!this.state.assuntos.find((a)=>a.name === assunto)){
-                // this.setState(state => {
-                //     const assuntos = [...state.assuntos, {id:this.state.assuntos.length+1,name:assunto}];
+                this.setState(state => {
+                //     const assuntos = [...state.assuntos, {pk:this.state.assuntos.length+1,name:assunto}];
 
-                //     return {
+                    return {
                 //         assuntos,
-                //         add:false
-                //     }
-                //   })
+                        add:false
+                    }
+                  })
 
-                this.doCORSRequest({
-                    method: 'POST',
-                    url: 'http://deadpyxel.pythonanywhere.com/api/v1/categories/',
-                    data: {name:assunto,tickets:[]}
-                })
+                // this.doCORSRequest({
+                //     method: 'POST',
+                //     url: 'http://deadpyxel.pythonanywhere.com/api/v1/categories/',
+                //     data: {"name":assunto,"tickets":[]}
+                // })
                 this.loadCategories();
+
             }else alert('Este assunto já existe!!');
         }else alert('Assunto vazio!!');
     }
@@ -84,7 +86,7 @@ export default class Componentes extends Component{
         const assuntoConteudo = this.state.assunto.name;
         if(assuntoConteudo){
             if(!this.state.assuntos.find((a)=>a.name === assuntoConteudo)){
-                // this.setState(state => {
+                this.setState(state => {
                 //     const assuntos = state.assuntos.map((assunto)=>{
                 //         if(assunto.pk === this.state.assunto.pk){
                 //             assunto.name = assuntoConteudo
@@ -92,18 +94,18 @@ export default class Componentes extends Component{
                 //         }else return assunto
                 //     });
         
-                //     return {
+                    return {
                 //         assuntos,
-                //         edit:false
-                //     }
-                // })
+                        edit:false
+                    }
+                })
 
                 // fazer update
 
                 // this.doCORSRequest({
-                //     method: 'POST',
-                //     url: 'http://deadpyxel.pythonanywhere.com/api/v1/categories/',
-                //     data: ''
+                //     method: 'PATCH',
+                //     url: `http://deadpyxel.pythonanywhere.com/api/v1/categories/${this.state.assunto.pk}`,
+                //     data: {"name":assuntoConteudo}
                 // })
 
             }else alert('Este assunto já existe!!');
@@ -117,15 +119,22 @@ export default class Componentes extends Component{
     handleRemoveClose(){
         this.setState({...this.state,delete:false});
     }
+    
     handleRemoveConfirm(){
         this.setState(state => {
-            const assuntos = state.assuntos.filter(assunto => assunto.pk !== this.state.assunto.pk);
+            // const assuntos = state.assuntos.filter(assunto => assunto.pk !== this.state.assunto.pk);
       
             return {
-              assuntos,
+            //   assuntos,
               delete:false
             };
           });
+
+        // this.doCORSRequest({
+        //     method: 'DELETE',
+        //     url: `http://deadpyxel.pythonanywhere.com/api/v1/categories/${this.state.assunto.pk}`,
+        //     data: ''
+        // })
     }
 
 	handleHelp(){
@@ -156,8 +165,7 @@ export default class Componentes extends Component{
             if (x.status === 200) {
             var json_obj = JSON.parse(x.responseText);
             // pegar as categorias cadastradas na api
-            this.setState({assuntos:json_obj})
-
+            this.setState({assuntos:json_obj,loading:false})
             } else {
             console.error(x.statusText);
             }
@@ -193,8 +201,9 @@ export default class Componentes extends Component{
                 
                         handleHelp = {this.handleHelp}
                         handleHelpClose = {this.handleHelpClose} 
-                    />
 
+                        loading = {this.state.loading}
+                    />
                     <Painel assuntos={this.state.assuntos}/>
                 </div>
     }

@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const nodemailer = require('nodemailer');
 
-async function main(emails, assunto) {
+async function SendMail(emails, assunto) {
 
   // let testAccount = await nodemailer.createTestAccount();
 
@@ -21,15 +21,18 @@ async function main(emails, assunto) {
     from: process.env.email,
     to: emails,
     subject: 'FixUnesp',
-    text: assunto
+    // text: assunto,
+    html: assunto
   },
     function (err, data) {
       if (err) {
         console.log(err);
       }
       else {
-        console.log('Email enviado !!');
+        console.log('Email enviado !!'+info);
       }
     }
   );
 }
+
+export default SendMail;
