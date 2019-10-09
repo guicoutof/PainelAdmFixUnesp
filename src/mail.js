@@ -12,8 +12,8 @@ async function main(emails, assunto) {
     // secure: false,
     service: 'gmail',
     auth: {
-      user: process.env.email,
-      pass: process.env.password
+      user: 'fixunesp@gmail.com',
+      pass: 'fixunesp1234'
     }
   });
 
