@@ -3,16 +3,8 @@ import './Modal.css'
 import Modal from '@material-ui/core/Modal'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Imagem from '@material-ui/icons/Image'
-import IconButton from '@material-ui/core/IconButton';
-
-
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default function simpleModal(props){
 
@@ -66,7 +58,7 @@ export function ModalHelp(props){
 				onClose={props.handleClose}
                 >
                 <div className="modalHelp">
-                    <h1 className="tituloModal">Help</h1>
+                    <h1 className="tituloModal">Ajuda</h1>
 					<div className="text">
                         <br></br>
                         <p>É necessario definir um assunto para que os assuntos em comum e que estão no mesmo local possam ser combinados.</p>
@@ -93,58 +85,48 @@ export function ModalImage(props){
             onClose={props.handleClose}
             >
             <div className="modalImage">
-                 <p>{props.conteudo}</p>
+                <img src={props.conteudo} alt="" height="100%" width="100%" />
             </div>
             </Modal>
 }
 
-export function ModalGrupo(props){
-
+export function ModalEmail(props){
+    let mensagem = ''
     return <Modal
-    aria-labelledby="grupo"
-    aria-describedby="grupo-description"
+    aria-labelledby="simple-modal-title"
+    aria-describedby="simple-modal-description"
     open={props.open}
     onClose={props.handleClose}
     >
-        <Paper className={'tabelaModal'}>
-            <Table >
-                <TableHead>
-                <TableRow>
-                    <TableCell align="center"><strong>Email</strong></TableCell>
-                    <TableCell align="center"><strong>Descrição</strong></TableCell>
-                    <TableCell align="center"><strong>Bloco</strong></TableCell>
-                    <TableCell align="center"><strong>Piso</strong></TableCell>
-                    <TableCell align="center"><strong>Imagem</strong></TableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                {props.rows.map(row =>(
-                    <TableRow key={row.id}>
-                    <TableCell component="th" scope="row" align="center">
-                    {row.email}
-                        </TableCell>
-                        <TableCell component="th" scope="row" align="center">
-                        {row.descricao}
-                        </TableCell>
-                        <TableCell align="center">
-                        {row.bloco}
-                        </TableCell>
-                        <TableCell align="center">
-                        {row.piso}
-                        </TableCell>
-                        <TableCell align="center">
-                        <IconButton size="small" aria-label="Imagem" onClick={()=>props.handleOpen(row.imagem)} >
-                        <Imagem />
-                        </IconButton>
-                        <ModalImage className="imagem" open={props.imageModal} handleClose={props.handleCloseImagem} conteudo={props.conteudo}></ModalImage>
-                        </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-
-
-
-            </Table>
-        </Paper>
-    </Modal>
+    <div className="modalEditor">
+        <h2 id="modal-title">{props.tittle}</h2>
+        <h4 id="modal-title">{props.subtittle}</h4>
+        <CKEditor
+                    editor={ ClassicEditor }
+                    data=""
+                    onInit={ editor => {
+                        // You can store the "editor" and use when it is needed.
+                        // console.log( 'Editor is ready to use!', editor );
+                    } }
+                    onChange={ ( event, editor ) => {
+                        mensagem = editor.getData();
+                        // console.log( { event, editor, data } );
+                    } }
+                    onBlur={ ( event, editor ) => {
+                        // console.log( 'Blur.', editor );
+                    } }
+                    onFocus={ ( event, editor ) => {
+                        // console.log( 'Focus.', editor );
+                    } }
+                />
+        <div className="btns3">
+            <Button id="confirm" variant="contained" color="primary" 
+                onClick={()=>props.handleConfirm(mensagem)}>Enviar</Button>
+                <Button id="confirm" variant="contained" className="btnGreen" 
+                onClick={()=>props.handleConfirmSEmail()}>Concluir Sem Mensagem</Button>
+            <Button variant="contained" color="secondary"
+                onClick={props.handleClose}>Cancelar</Button>
+        </div>
+    </div>
+</Modal>
 }

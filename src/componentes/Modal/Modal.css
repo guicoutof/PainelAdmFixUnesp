@@ -1,5 +1,5 @@
 .modal{
-    margin-top: 200px;
+    margin-top: 2vw;
     margin-left: auto;
     margin-right: auto;
     width: 40%;
@@ -20,7 +20,7 @@
 
 
 .modalHelp {
-    margin-top: 100px;
+    margin-top: 2vw;
     margin-left: auto;
     margin-right: auto;
     width: 40%;
@@ -30,7 +30,8 @@
     padding: 2%;
 	text-align: justify;
 	font-family: arial-black;
-	font-size: 20px
+    font-size: 20px;
+    overflow: auto;
 }
 		
 .fechar {
@@ -45,7 +46,7 @@
 }
 
 .modalImage{
-    margin-top: 100px;
+    margin-top: 2vw;
     margin-left: auto;
     margin-right: auto;
     width: 40%;
@@ -59,7 +60,7 @@
 }
 
 .tabelaModal{
-    margin-top: 200px;
+    margin-top: 2vw;
     margin-left: auto;
     margin-right: auto;
     width: 60%;
@@ -69,4 +70,37 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.modalEditor{
+    display: block;
+    margin-top: 2vw;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    max-height: 80vh;    
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.btns3{
+    margin: 10px;
+    width: 65%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.btns3 .btnGreen{
+    color: white;
+    background-color: green ;
+}
+
+.btns3 .btnGreen:hover{
+    background-color: darkgreen ;
 }
