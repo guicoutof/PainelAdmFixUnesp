@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const nodemailer = require('nodemailer');
 
 async function main(emails, assunto) {
