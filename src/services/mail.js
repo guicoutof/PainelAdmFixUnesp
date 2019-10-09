@@ -16,7 +16,7 @@ async function SendMail(emails, assunto) {
   });
 
   let info = await transporter.sendMail({
-    from: process.env.email,
+    from: 'fixunesp@gmail.com',
     to: emails,
     subject: 'FixUnesp',
     // text: assunto,
@@ -27,7 +27,7 @@ async function SendMail(emails, assunto) {
         console.log(err);
       }
       else {
-        console.log('Email enviado !!'+info);
+        console.log('Email enviado !!' + info);
       }
     }
   );
