@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './Painel.css'
+import api from "../../services/api"
 
 import Pesquisar from './Pesquisar'
 import Tabela from './Tabela'
-import SendEmail from '../../services/mail'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default class painel extends Component{
@@ -37,28 +37,31 @@ export default class painel extends Component{
         
     }
 
-    resolvido(mensagem){
-        // this.state.emailSend
-        console.log('Envio Email')
-        SendEmail(['guicoutof@gmail.com','guilherme.couto@unesp.br'],mensagem);
+    async resolvido(assunto){
+        const emails = this.state.emailSend;
+        try{
+            const response = await api.post("/email", { emails, assunto })
+        }catch(err){
+            // console.log(err);
+        }
         this.concluir();
     }
 
     concluir(){
-        const ticket = this.state.lista.find(row=>{
-            if(row.pk === this.state.pkEmail)return row;
-            return null;
-        })
-        this.state.lista.map(row=>{
-            if(ticket !== null && row.category === ticket.category && row.floor === ticket.floor &&
-                row.room === ticket.room && row.building === ticket.building)
-                this.doCORSRequest({
-                    method: 'DELETE',
-                    url: `http://deadpyxel.pythonanywhere.com/api/v1/tickets/${ticket.pk}/`,
-                    data: ''
-                  });
-                return null;
-        })
+        // const ticket = this.state.lista.find(row=>{
+        //     if(row.pk === this.state.pkEmail)return row;
+        //     return null;
+        // })
+        // this.state.lista.map(row=>{
+        //     if(ticket !== null && row.category === ticket.category && row.floor === ticket.floor &&
+        //         row.room === ticket.room && row.building === ticket.building)
+        //         this.doCORSRequest({
+        //             method: 'DELETE',
+        //             url: `http://deadpyxel.pythonanywhere.com/api/v1/tickets/${ticket.pk}/`,
+        //             data: ''
+        //           });
+        //         return null;
+        // })
         this.setState({emailModal:false});
     }
     
