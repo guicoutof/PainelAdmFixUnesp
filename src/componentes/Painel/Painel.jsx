@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './Painel.css'
 import api from "../../services/api"
 
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import Pesquisar from './Pesquisar'
 import Tabela from './Tabela'
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -19,9 +21,11 @@ export default class painel extends Component{
             emailSend:null,         //lista de email que serão enviados mensagem de feedback
             pkEmail:0,              //chave do ticket que será concluido e removido
             loading:true,           //variavel de loading
+            filter:true,            //switch de filtragem da api
         }
         this.loadTickets()
         
+        this.changeFilter = this.changeFilter.bind(this)
         this.pesquisar = this.pesquisar.bind(this)
         
         this.handleOpenModalImage = this.handleOpenModalImage.bind(this);
@@ -40,7 +44,7 @@ export default class painel extends Component{
     async resolvido(assunto){
         const emails = this.state.emailSend;
         try{
-            const response = await api.post("/email", { emails, assunto })
+            await api.post("/email", { emails, assunto })
         }catch(err){
             // console.log(err);
         }
@@ -85,6 +89,11 @@ export default class painel extends Component{
         this.setState({pkChangeAssunto:id});
     }
     
+    changeFilter(){
+        this.setState({filter:!this.state.filter,loading:true,lista:[]});
+        this.loadTickets();
+    }
+
     pesquisar(event){
         const pesquisa = event.target.value;
         if(!pesquisa){
@@ -193,7 +202,7 @@ export default class painel extends Component{
 
     
     checkTickets(){
-        if(!this.state.loading){
+        if(!this.state.loading && this.state.filter){
             this.setState(state => {
                 var drop = [];   //vetor auxiliar para concatenar tickets que ja foi adicionados (simplificar tickets)
                 let listaAux = state.lista;
@@ -223,7 +232,16 @@ export default class painel extends Component{
 
     render(){
         return  <div className="painel">
-            <Pesquisar pesquisar={this.pesquisar} />
+            <div className="options">
+                <FormControlLabel className="filter"
+                    control={
+                        <Switch color="primary" checked={this.state.filter} onChange={()=>this.changeFilter()} value="" />
+                    }
+                    label="Filtro"
+                    labelPlacement="start"
+                    />
+                <Pesquisar pesquisar={this.pesquisar} />
+            </div>
                     {
                     this.state.loading ? 
                     <CircularProgress color="primary"  className="loading"/>
