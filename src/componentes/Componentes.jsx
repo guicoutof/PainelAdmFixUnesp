@@ -8,11 +8,7 @@ export default class Componentes extends Component{
     constructor(props){
         super(props)
         this.state = {
-            assuntos: [ 
-                // {id:1,conteudo:'Buraco'},
-                // {id:2,conteudo:'Lampada'},
-                // {id:3,conteudo:'Porta'},
-            ],
+            assuntos: [],
             assunto:{pk:0,name:''},
             add:false,
             edit:false,
