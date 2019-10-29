@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Menu from './Menu/Menu'
 import Painel from './Painel/Painel'
 import './Componentes.css'
+import Header from './Header/Header'
+import Footer from './Footer/Footer'
 
 export default class Componentes extends Component{
 
@@ -179,7 +181,10 @@ export default class Componentes extends Component{
 
     render(){
         
-        return  <div className="conteudo">
+        return <div className="app"> 
+                <Header/>
+                <div className="conteudo">
+                    
                     <Menu state={this.state} 
                         handleAdd = {this.handleAdd}
                         handleAddChange = {this.handleAddChange}
@@ -201,6 +206,8 @@ export default class Componentes extends Component{
                         loading = {this.state.loading}
                     />
                     <Painel assuntos={this.state.assuntos}/>
+                </div>
+                <Footer/>
                 </div>
     }
 

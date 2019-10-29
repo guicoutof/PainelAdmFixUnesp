@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom'
 import './Login.css'
 import { login } from "../../services/auth";
 import api from "../../services/api";
+import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField';
@@ -41,6 +43,8 @@ class Login extends Component {
   render() {
 
     return (
+      <div className="app">
+      <Header/>
       <div className="login" onSubmit={this.handleSignUp}>
         <Paper className="loginPaper">
           <h1 className="titulo">Login</h1>
@@ -62,6 +66,8 @@ class Login extends Component {
             </Button>
 
         </Paper>
+      </div>
+      <Footer/>
       </div>
     );
   }

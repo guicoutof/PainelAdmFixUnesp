@@ -8,9 +8,8 @@ import Routes from './Routes.jsx'
 
 export default function App() {
     return <div className="app">
-        <Header />
+        {/* <Header /> */}
         <Routes />
-        <Footer />
-        {/* <Router /> */}
+        {/* <Footer /> */}
     </div>
 }
